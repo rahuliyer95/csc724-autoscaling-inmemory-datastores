@@ -1,0 +1,1 @@
+# CSC 724 --- Auto-Scaling In-Memory Data Stores

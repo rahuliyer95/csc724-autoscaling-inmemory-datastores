@@ -1,0 +1,12 @@
+# Zookeeper
+# Start Zookeeper (3.4.13) from /opt/zookeeper
+# @author: Rahul Iyer <rsiyer2@ncsu.edu>
+
+[Unit]
+Description=Zookeeper (3.4.13)
+
+[Service]
+ExecStart=/opt/zookeeper/3.4.13/bin/zkServer.sh start-foreground
+
+[Install]
+WantedBy=multi-user.target

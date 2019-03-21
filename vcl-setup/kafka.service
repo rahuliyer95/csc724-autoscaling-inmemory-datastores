@@ -1,0 +1,13 @@
+# Kafka
+# Start Kafka (2.1.1) from /opt/kafka
+# @author: Rahul Iyer <rsiyer2@ncsu.edu>
+
+[Unit]
+Description=Kafka (2.1.1)
+Wants=zookeeper.service
+
+[Service]
+ExecStart=/opt/kafka/2.1.1/bin/kafka-server-start.sh /opt/kafka/2.1.1/config/server.properties
+
+[Install]
+WantedBy=multi-user.target
