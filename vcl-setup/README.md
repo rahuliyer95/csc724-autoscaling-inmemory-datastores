@@ -53,3 +53,12 @@ Copy the [workload_redis](./workload_redis) file to `/opt/ycsb/workloads` direct
 Use the [redis_load.sh](./redis_load.sh) file to run the workload against.
 
 Edit the `REDIS_HOST` variable in the script to point to your Redis host
+
+## Firewall
+
+To allow services through firewall iptables setup needs to be done. Use the following commands to add iptables exception (run as root)
+
+```sh
+iptables -I INPUT -p TCP -s 0.0.0.0/0 --dport 2181 -j ACCEPT # Zookeeper
+iptables -I INPUT -p TCP -s 0.0.0.0/0 --dport 9092 -j ACCEPT # Kafka
+```
