@@ -50,7 +50,7 @@ mv '/opt/ycsb-0.15.0' '/opt/ycsb'
 
 Copy the [workload_redis](./workload_redis) file to `/opt/ycsb/workloads` directory.
 
-Use the [redis_load.sh](./redis_load.sh) file to run the workload against.
+Use the [redis-load.sh](./redis-load.sh) file to run the workload against.
 
 Edit the `REDIS_HOST` variable in the script to point to your Redis host
 
