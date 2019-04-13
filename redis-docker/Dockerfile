@@ -13,6 +13,18 @@ RUN echo 'deb https://apt.datadoghq.com/ stable 6' > /etc/apt/sources.list.d/dat
       apt-get install -y datadog-agent && \
       apt-get clean
 
+RUN rm -r /usr/share/man
+
+RUN rm -r /var/cache/apt
+
+RUN rm -r /var/lib/apt/lists
+
+RUN rm -r /usr/share/locale
+
+RUN rm -r /var/log
+
+RUN rm -r /usr/share/info
+
 ADD conf.d/redisdb.yaml /etc/datadog-agent/conf.d/redisdb.yaml
 
 ADD redis.conf /usr/local/etc/redis.conf
@@ -22,6 +34,8 @@ ADD collectd.conf /etc/collectd/collectd.conf
 ADD entrypoint.sh /opt/entrypoint.sh
 
 EXPOSE 6379
+
+EXPOSE 16379
 
 EXPOSE 6380
 

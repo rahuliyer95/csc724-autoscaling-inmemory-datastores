@@ -1,0 +1,57 @@
+#!/bin/bash
+
+set -e
+
+error() {
+  echo $* >&2
+  exit 1
+}
+
+gen_workload() {
+  # Records - 100,000
+  echo -ne "recordcount=${YCSB_RECORD_COUNT:-100000}
+operationcount=${1:-1}
+workload=com.yahoo.ycsb.workloads.CoreWorkload
+readallfields=true
+readproportion=0.10
+updateproportion=0.20
+scanproportion=0
+insertproportion=0.30
+readmodifywriteproportion=0.40
+requestdistribution=zipfian"
+}
+
+SCRIPT_DIR="$(dirname $0)"
+
+[ -r "$SCRIPT_DIR/.redis_custom_workload_env" ] && . "$SCRIPT_DIR/.redis_custom_workload_env"
+
+# sanity check
+YCSB_DIR="${YCSB_DIR:-/opt/ycsb}"
+YCSB_THREAD_COUNT="${YCSB_THREAD_COUNT:-16}"
+LOG_FILE="${LOG_FILE:-/tmp/redis_custom_workload.log}"
+
+[ -z "$REDIS_HOST" ] && error "Invalid REDIS_HOST=$REDIS_HOST"
+
+[ ! -d "$YCSB_DIR" ] && error "Invalid YCSB_DIR=$YCSB_DIR"
+
+[ ! -f "$WORKLOAD_CURVE_FILE" ] && error "Invalid workload curve file=$WORKLOAD_CURVE_FILE"
+
+echo "Starting ycsb load..." # >> "$LOG_FILE"
+
+# Run workload
+while read -r opCount; do
+  echo "Running workload with operation count $opCount..."
+  gen_workload "$opCount" >/tmp/workload
+
+  "$YCSB_DIR/bin/ycsb" load redis -s \
+    -threads "$YCSB_THREAD_COUNT" \
+    -P "/tmp/workload" \
+    -p "redis.host=${REDIS_HOST}" \
+    -p "redis.cluster=true" # >> "$LOG_FILE" 2>&1
+
+  "$YCSB_DIR/bin/ycsb" run redis -s \
+    -threads "$YCSB_THREAD_COUNT" \
+    -P "/tmp/workload" \
+    -p "redis.host=${REDIS_HOST}" \
+    -p "redis.cluster=true" # >> "$LOG_FILE" 2>&1
+done <"$WORKLOAD_CURVE_FILE"

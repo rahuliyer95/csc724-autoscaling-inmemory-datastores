@@ -1,0 +1,5 @@
+REDIS_HOST=csc724-redis.eastus.azurecontainer.io
+LOG_FILE=/tmp/redis_batch.log
+YCSB_DIR=/opt/ycsb
+YCSB_THREAD_COUNT=16
+YCSB_WORKLOAD_FILE="$YCSB_DIR/workloads/workload_redis"

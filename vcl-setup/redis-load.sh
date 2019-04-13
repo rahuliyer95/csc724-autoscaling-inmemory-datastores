@@ -2,18 +2,41 @@
 
 set -e
 
-cd /opt/ycsb
+error() {
+  echo $* >&2
+  exit 1
+}
 
-echo "starting ycsb load..." >> /tmp/redis_load.log
+SCRIPT_DIR="$(dirname $0)"
 
-export REDIS_HOST="csc724-redis.eastus.azurecontainer.io"
-# export REDIS_HOST="localhost"
+[ -r "$SCRIPT_DIR/.redis_load_env" ] && . "$SCRIPT_DIR/.redis_load_env"
+
+# sanity check
+YCSB_DIR="${YCSB_DIR:-/opt/ycsb}"
+YCSB_THREAD_COUNT="${YCSB_THREAD_COUNT:-16}"
+LOG_FILE="${LOG_FILE:-/tmp/redis_batch.log}"
+
+[ -z "$REDIS_HOST" ] && error "Invalid REDIS_HOST=$REDIS_HOST"
+
+[ ! -d "$YCSB_DIR" ] && error "Invalid YCSB_DIR=$YCSB_DIR"
+
+[ ! -r "$YCSB_WORKLOAD_FILE" ] && error "Invalid YCSB_WORKLOAD_FILE=$YCSB_WORKLOAD_FILE"
+
+echo "starting ycsb load..." >> "$LOG_FILE"
 
 # Load data
-./bin/ycsb load redis -s -P ./workloads/workload_redis -p "redis.host=${REDIS_HOST}" >> /tmp/redis_load.log 2>&1
 
-# Run test
-./bin/ycsb run redis -s -P ./workloads/workload_redis -p "redis.host=${REDIS_HOST}" >> /tmp/redis_load.log 2>&1
+"$YCSB_DIR/bin/ycsb" load redis -s \
+  -threads "$YCSB_THREAD_COUNT" \
+  -P "$YCSB_WORKLOAD_FILE" \
+  -p "redis.host=${REDIS_HOST}" >> "$LOG_FILE" 2>&1
 
-echo "load complete..." >> /tmp/redis_load.log
+# Run
+
+"$YCSB_DIR/bin/ycsb" run redis -s \
+  -threads "$YCSB_THREAD_COUNT" \
+  -P "$YCSB_WORKLOAD_FILE" \
+  -p "redis.host=${REDIS_HOST}" >> "$LOG_FILE" 2>&1
+
+echo "batch load complete..." >> "$LOG_FILE"
 
