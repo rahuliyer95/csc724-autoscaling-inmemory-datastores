@@ -6,7 +6,6 @@ verify_ssl = true
 [dev-packages]
 yapf = "*"
 flake8 = "*"
-ptpython = "*"
 
 [packages]
 click = "*"
