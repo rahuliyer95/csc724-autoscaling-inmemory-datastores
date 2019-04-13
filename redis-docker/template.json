@@ -1,0 +1,78 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.ContainerInstance/containerGroups",
+            "apiVersion": "2018-04-01",
+            "name": "csc724-redis-3",
+            "location": "eastus",
+            "properties": {
+                "containers": [
+                    {
+                        "name": "csc724-redis-3",
+                        "properties": {
+                            "image": "rahuliyer95/csc724-redis-collectd",
+                            "command": [],
+                            "ports": [
+                                {
+                                    "protocol": "TCP",
+                                    "port": 6379
+                                },
+                                {
+                                    "protocol": "TCP",
+                                    "port": 6380
+                                },
+                                {
+                                    "protocol": "TCP",
+                                    "port": 16379
+                                }
+                            ],
+                            "environmentVariables": [
+                                {
+                                    "name": "ENV_BROKER",
+                                    "value": "152.46.17.159:9092"
+                                },
+                                {
+                                    "name": "ENV_INTERVAL",
+                                    "value": "150"
+                                },
+                                {
+                                    "name": "DD_API_KEY",
+                                    "value": "ad2411bf98f3c42428fa06c233cb23f5"
+                                }
+                            ],
+                            "resources": {
+                                "requests": {
+                                    "memoryInGB": 1,
+                                    "cpu": 1
+                                }
+                            }
+                        }
+                    }
+                ],
+                "restartPolicy": "Always",
+                "ipAddress": {
+                    "ports": [
+                        {
+                            "protocol": "TCP",
+                            "port": 6379
+                        },
+                        {
+                            "protocol": "TCP",
+                            "port": 6380
+                        },
+                        {
+                            "protocol": "TCP",
+                            "port": 16379
+                        }
+                    ],
+                    "type": "Public",
+                    "dnsNameLabel": "csc724-redis-3"
+                },
+                "osType": "Linux"
+            }
+        }
+    ]
+}
