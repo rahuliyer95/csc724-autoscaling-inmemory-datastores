@@ -88,9 +88,6 @@ def main(kafka_host, kafka_port, topic, verbose):
     global LOG
     setup_logger(verbose)
 
-    scale_up()
-    return
-
     consumer = get_kafka_consumer(kafka_host, kafka_port, topic)
     for message in consumer:
         payload = None
