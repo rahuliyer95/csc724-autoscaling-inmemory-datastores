@@ -12,6 +12,7 @@ click = "*"
 kafka-python = "*"
 jsonschema = "*"
 azure = "*"
+retrying = "*"
 
 [requires]
 python_version = "3.7"

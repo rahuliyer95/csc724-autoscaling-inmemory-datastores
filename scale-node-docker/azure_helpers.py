@@ -2,6 +2,7 @@
 Azure communications
 """
 import azure.mgmt.containerinstance.models as acimodels
+import os
 import re
 import time
 from azure.common.client_factory import get_client_from_auth_file
@@ -12,6 +13,8 @@ from azure.mgmt.network import NetworkManagementClient
 _ACI_CLIENT = None
 _ARM_CLIENT = None
 _ANM_CLIENT = None
+_DATADOG_API_KEY = os.getenv('DD_API_KEY', default='')
+_COLLECTD_INTERVAL = os.getenv('ENV_INTERVAL', default='')
 _REDIS_PORTS = [6379, 6380, 16379]
 _CONTAINER_IMAGE = 'rahuliyer95/csc724-redis-collectd'
 _RESOURCE_GROUP = 'csc724'
@@ -56,7 +59,7 @@ def get_redis_slave_nodes():
     return [cntr for cntr in az.container_groups.list() if _REDIS_SLAVE_REGEX.match(cntr.name)]
 
 
-def add_redis_node(name):
+def add_redis_node(name, kafka_host, kafka_port):
     """
     Deploy a new redis cluster node
 
@@ -68,11 +71,18 @@ def add_redis_node(name):
 
     resource_group = arm.resource_groups.get(_RESOURCE_GROUP)
 
+    envs = [
+        acimodels.EnvironmentVariable(name='DD_API_KEY', value=_DATADOG_API_KEY),
+        acimodels.EnvironmentVariable(name='ENV_BROKER', value=kafka_host + ':' + str(kafka_port)),
+        acimodels.EnvironmentVariable(name='ENV_INTERVAL', value=_COLLECTD_INTERVAL)
+    ]
+
     container = acimodels.Container(
         name=name,
         image=_CONTAINER_IMAGE,
         resources=acimodels.ResourceRequirements(
             requests=acimodels.ResourceRequests(memory_in_gb=1, cpu=1.0)),
+        environment_variables=envs,
         ports=[acimodels.ContainerPort(port=p) for p in _REDIS_PORTS])
 
     network_profile = acimodels.ContainerGroupNetworkProfile(

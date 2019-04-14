@@ -4,6 +4,7 @@ import json
 import jsonschema
 import logging
 import redis_helpers as rh
+import time
 from kafka import KafkaConsumer
 
 LOG = logging.getLogger('scale')
@@ -42,7 +43,7 @@ def get_kafka_consumer(host, port, topic):
     return KafkaConsumer(topic, bootstrap_servers='%s:%d' % (host, port), group_id='scale')
 
 
-def scale_up():
+def scale_up(kafka_host, kafka_port):
     LOG.info('Prediction asked to scale up')
     LOG.info('Fetching master nodes in the cluster')
 
@@ -55,28 +56,79 @@ def scale_up():
 
     LOG.info('Creating new master %s and new slave %s', master_name, slave_name)
 
-    az.add_redis_node(master_name)
-    az.add_redis_node(slave_name)
+    az.add_redis_node(master_name, kafka_host, kafka_port)
+    az.add_redis_node(slave_name, kafka_host, kafka_port)
 
     LOG.info('Waiting for %s container to be created...', master_name)
     master_container_grp = az.wait_for_container(master_name)
     LOG.debug('Master container %r', master_container_grp.as_dict())
-    LOG.info('Waiting for %s container to be created...', slave_name)
-    slave_container_grp = az.wait_for_container(slave_name)
-    LOG.debug('Slave container %r', slave_container_grp.as_dict())
 
     LOG.info('Adding master to cluster')
     rh.join_cluster(master_container_grp, cluster)
 
+    cluster.append(master_container_grp)
+
+    time.sleep(1)
+
+    LOG.info('Fixing existing cluster')
+    rh.cluster_fix(cluster)
+
+    time.sleep(1)
+
+    LOG.info('Rebalancing cluster')
+    rh.cluster_rebalance(cluster)
+
+    LOG.info('Waiting for %s container to be created...', slave_name)
+    slave_container_grp = az.wait_for_container(slave_name)
+    LOG.debug('Slave container %r', slave_container_grp.as_dict())
+
     LOG.info('Adding slave to cluster')
-    rh.cluster_meet(slave_container_grp, cluster)
+    rh.join_cluster(slave_container_grp, cluster)
+
+    time.sleep(1)
 
     LOG.info('Attaching slave to master')
     rh.attach_slave(master_container_grp, slave_container_grp)
 
+    LOG.info('Scale up complete')
+
 
 def scale_down():
     LOG.info('Prediction asked to scale down')
+    LOG.info('Fetching master nodes in the cluster')
+
+    cluster = az.get_redis_master_nodes()
+    LOG.debug('Redis nodes = %r', ', '.join(n.name for n in cluster))
+
+    max_node_id = max((int(n.name.split('-')[-1]) for n in cluster), default=0)
+    if max_node_id == 0:
+        LOG.warn('No nodes in cluster')
+        return
+
+    master_name = 'csc724-redis-%d' % (max_node_id)
+    slave_name = 'csc724-redis-slave-%d' % (max_node_id)
+
+    LOG.info('Waiting for slave container group')
+    slave_container_grp = az.wait_for_container(slave_name)
+    LOG.debug('Slave container %r', slave_container_grp.as_dict())
+
+    LOG.info('Removing slave %s from cluster', slave_name)
+    rh.del_node(slave_container_grp, cluster)
+
+    # TODO: Remove slave from azure
+
+    LOG.info('Waiting for master container group')
+    master_container_grp = az.wait_for_container(master_name)
+    LOG.debug('Master container %r', master_container_grp.as_dict())
+
+    LOG.info('Obtaining master node id')
+    # master_node_id = rh.get_node_id(master_container_grp.ip_address.ip)
+
+    # if not master_node_id:
+    #     LOG.error('Failed to obtain master node id, will be forced to shutdown the node')
+    # else:
+    #     LOG.info('Reshard data')
+    #     LOG.info('Removing master %s from cluster', master_name)
 
 
 @click.command()
@@ -105,7 +157,7 @@ def main(kafka_host, kafka_port, topic, verbose):
             continue
 
         if payload['scale'] == 'up':
-            scale_up()
+            scale_up(kafka_host, kafka_port)
         else:
             scale_down()
 
