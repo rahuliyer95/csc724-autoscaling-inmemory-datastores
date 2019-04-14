@@ -102,7 +102,10 @@ def scale_down():
 
     max_node_id = max((int(n.name.split('-')[-1]) for n in cluster), default=0)
     if max_node_id == 0:
-        LOG.warn('No nodes in cluster')
+        LOG.error('No nodes in cluster')
+        return
+    elif max_node_id == 1:
+        LOG.error('Need atleast 1 node in the cluster')
         return
 
     master_name = 'csc724-redis-%d' % (max_node_id)
@@ -115,20 +118,23 @@ def scale_down():
     LOG.info('Removing slave %s from cluster', slave_name)
     rh.del_node(slave_container_grp, cluster)
 
-    # TODO: Remove slave from azure
+    LOG.info('Removing %s from Azure', slave_name)
+    az.del_node(slave_name)
 
-    LOG.info('Waiting for master container group')
-    master_container_grp = az.wait_for_container(master_name)
-    LOG.debug('Master container %r', master_container_grp.as_dict())
+    master_container_grp = cluster.pop()
 
-    LOG.info('Obtaining master node id')
-    # master_node_id = rh.get_node_id(master_container_grp.ip_address.ip)
+    LOG.info('Resharding')
+    rh.reshard(master_container_grp, cluster)
 
-    # if not master_node_id:
-    #     LOG.error('Failed to obtain master node id, will be forced to shutdown the node')
-    # else:
-    #     LOG.info('Reshard data')
-    #     LOG.info('Removing master %s from cluster', master_name)
+    time.sleep(1)
+
+    LOG.info('Removing master %s from cluster', master_name)
+    rh.del_node(master_container_grp, cluster)
+
+    time.sleep(1)
+
+    LOG.info('Removing %s from Azure', slave_name)
+    az.del_node(master_name)
 
 
 @click.command()

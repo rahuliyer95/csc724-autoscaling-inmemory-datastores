@@ -85,7 +85,7 @@ def attach_slave(master_cntr_grp, slave_cntr_grp):
 
 def del_node(cntr_grp, cluster):
     """ Drop container from the cluster """
-    cntr_id = get_node_id(cntr_grp.ip_address.ip)
+    cntr_id = get_node_id(cntr_grp.ip_address.ip, cntr_grp.ip_address.ip)
     if not cntr_id:
         LOG.error('Unable to get id of %s', cntr_grp.name)
         return
@@ -104,3 +104,32 @@ def del_node(cntr_grp, cluster):
         else:
             LOG.warn('Failed to remove %s from cluster using %s, trying with other nodes',
                      cntr_grp.name, node.ip_address.ip)
+
+
+def reshard(cntr_grp, cluster):
+    """ Reshard the provided node """
+    cntr_id = get_node_id(cntr_grp.ip_address.ip, cntr_grp.ip_address.ip)
+    if not cntr_id:
+        LOG.error('Unable to get id of %s', cntr_grp.name)
+        return
+
+    for node in cluster:
+        LOG.info('Trying to reshard from %s to %s', cntr_grp.name, node.name)
+        node_id = get_node_id(node.ip_address.ip, node.ip_address.ip)
+
+        if not node_id:
+            LOG.error('Unable to find id for %s', node.name)
+            continue
+
+        result = subprocess.run([
+            _REDIS_COMMAND_PATH, '-h', cntr_grp.ip_address.ip, '-p', _REDIS_PORT, '--cluster',
+            'reshard', cntr_grp.ip_address.ip + ':' + _REDIS_PORT, '--cluster-from', cntr_id,
+            '--cluster-to', node_id, '--cluster-slots', '16384', '--cluster-yes'
+        ])
+
+        if result.returncode == 0:
+            LOG.info('Reshard successful')
+            break
+        else:
+            LOG.warn('Unable to reshard from %s to %s, trying with other nodes', cntr_grp.name,
+                     node.name)

@@ -105,6 +105,12 @@ def add_redis_node(name, kafka_host, kafka_port):
     aci.container_groups.create_or_update(resource_group.name, name, container_group)
 
 
+def del_redis_node(name):
+    """ Remove redis container """
+    aci = _get_aci_client()
+    aci.container_groups.delete(_RESOURCE_GROUP, name)
+
+
 def wait_for_container(name):
     """ Wait for container to be created """
     aci = _get_aci_client()
