@@ -1,18 +1,16 @@
 from arima import arima
+import producer
 import threading
 from threading import Timer
 
 def predict():
-    arima.ARIMA()
+    arima_result = arima.arima_model()
     # RNN()
-    average_load=80
-    peak_load=90
-    scale="up"
-    node=3
-    send_data_producer(average_load,peak_load,scale,node)
 
-def send_data_producer():
-    producer(average_load,peak_load,scale,node)
+    send_data_producer(arima_result)
+
+def send_data_producer(result):
+    producer.producer(result)
 
 predict()
 # threading.Timer(60*15,predict).start()
