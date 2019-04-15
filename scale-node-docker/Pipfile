@@ -1,0 +1,22 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+yapf = "*"
+flake8 = "*"
+
+[packages]
+click = "*"
+kafka-python = "*"
+jsonschema = "*"
+retrying = "*"
+timeout-decorator = "*"
+azure-mgmt-containerinstance = "*"
+azure-mgmt-resource = "*"
+azure-mgmt-network = "*"
+azure-common = "*"
+
+[requires]
+python_version = "3.7"
