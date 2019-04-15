@@ -5,10 +5,12 @@ import azure.mgmt.containerinstance.models as acimodels
 import os
 import re
 import time
+import timeout_decorator
 from azure.common.client_factory import get_client_from_auth_file
 from azure.mgmt.containerinstance import ContainerInstanceManagementClient
 from azure.mgmt.resource import ResourceManagementClient
 from azure.mgmt.network import NetworkManagementClient
+from retrying import retry
 
 _ACI_CLIENT = None
 _ARM_CLIENT = None
@@ -111,6 +113,8 @@ def del_redis_node(name):
     aci.container_groups.delete(_RESOURCE_GROUP, name)
 
 
+@timeout_decorator.timeout(5)
+@retry(retry_on_exception=lambda e: True, stop_max_attempt_number=15, wait_fixed=1000)
 def wait_for_container(name):
     """ Wait for container to be created """
     aci = _get_aci_client()
@@ -119,5 +123,5 @@ def wait_for_container(name):
         if cg.containers[0].instance_view \
                 and cg.containers[0].instance_view.current_state.state.lower() == 'running':
             return cg
-        time.sleep(3)
+        time.sleep(2)
     return None

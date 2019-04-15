@@ -112,14 +112,19 @@ def scale_down():
     slave_name = 'csc724-redis-slave-%d' % (max_node_id)
 
     LOG.info('Waiting for slave container group')
-    slave_container_grp = az.wait_for_container(slave_name)
-    LOG.debug('Slave container %r', slave_container_grp.as_dict())
+    slave_container_grp = None
+    try:
+        slave_container_grp = az.wait_for_container(slave_name)
+        LOG.debug('Slave container %r', slave_container_grp.as_dict())
+    except Exception:
+        LOG.error('Unable to get slave container')
 
-    LOG.info('Removing slave %s from cluster', slave_name)
-    rh.del_node(slave_container_grp, cluster)
+    if slave_container_grp:
+        LOG.info('Removing slave %s from cluster', slave_name)
+        rh.del_node(slave_container_grp, cluster)
 
-    LOG.info('Removing %s from Azure', slave_name)
-    az.del_node(slave_name)
+        LOG.info('Removing %s from Azure', slave_name)
+        az.del_node(slave_name)
 
     master_container_grp = cluster.pop()
 
@@ -134,7 +139,9 @@ def scale_down():
     time.sleep(1)
 
     LOG.info('Removing %s from Azure', slave_name)
-    az.del_node(master_name)
+    az.del_redis_node(master_name)
+
+    LOG.info('Scale down complete')
 
 
 @click.command()
