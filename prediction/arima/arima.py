@@ -26,6 +26,7 @@ def analyze(predict,memory_host):
     peak_value=max(predict["prediction"])
     average_value=sum(predict["prediction"])/len(predict)
     nodes=len(memory_host.keys())
+    print(average_value/(nodes*2*1024))
     if average_value/(nodes*2*1024) >0.7:
         scale="up"
     autoScale= json.dumps({
@@ -109,7 +110,7 @@ def predict_arima(df):
 def arima_model():
     consumer = KafkaConsumer(
     "collectd",
-    # group_id='arima1',
+    group_id='arima2',
     auto_offset_reset="earliest",
     bootstrap_servers=["152.46.17.159:9092"],
     consumer_timeout_ms=10000,
