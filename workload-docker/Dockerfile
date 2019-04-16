@@ -7,9 +7,9 @@ ENV YCSB_ZIP_DIR ycsb-0.15.0
 # Requirements
 RUN install_packages ca-certificates curl openjdk-8-jre-headless python python3
 
-RUN cd /opt && \
-    curl -SL "$YCSB_URL" | tar xz && \
-    mv "$YCSB_ZIP_DIR" ycsb && \
+RUN mkdir -p /opt/ycsb
+
+RUN curl -SL "$YCSB_URL" | tar xz -C /opt/ycsb --strip-components=1 && \
     cd /opt/ycsb && \
     rm -rf accumulo1.6-binding accumulo1.7-binding accumulo1.8-binding aerospike-binding && \
     rm -rf arangodb-binding asynchbase-binding azuredocumentdb-binding azuretablestorage-binding && \
