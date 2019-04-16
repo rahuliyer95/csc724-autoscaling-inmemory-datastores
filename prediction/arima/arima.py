@@ -85,44 +85,45 @@ def predict_arima(df):
     aic=[]
 
             
-    try:
-        stepwise_model = ARIMA(
-            order=(p,d,q),
-            seasonal_order=(0,1,0,12),
-            suppress_warnings=True, 
-            scoring='mse'
-        )
-        x=str(p)+" "+str(d)+" "+str(q)
-        # print(x)
+    # try:
+    stepwise_model = ARIMA(
+        order=(p,d,q),
+        seasonal_order=(0,1,0,12),
+        suppress_warnings=True, 
+        scoring='mse'
+    )
+    x=str(p)+" "+str(d)+" "+str(q)
+    # print(x)
 
-        stepwise_model.fit(train)
-        future_forecast = stepwise_model.predict(n_periods=len(test))
-        # print(future_forecast)
-        future_forecast = pd.DataFrame(future_forecast,index = test.index,columns=["prediction"])
-        logging.info(future_forecast)
-        logging.info(mean_absolute_error(test, future_forecast))
-        res=pd.concat([test,future_forecast],axis=1)
+    stepwise_model.fit(train)
+    future_forecast = stepwise_model.predict(n_periods=len(test))
+    # print(future_forecast)
+    future_forecast = pd.DataFrame(future_forecast,index = test.index,columns=["prediction"])
+    logging.info(future_forecast)
+    logging.info(mean_absolute_error(test, future_forecast))
+    res=pd.concat([test,future_forecast],axis=1)
 
-        trace1 = go.Scatter(x=res.index, y=res["prediction"],name="Prediction", mode='lines')
-        trace3 = go.Scatter(x=res.index, y=res["memory_used"],name="Test", mode='lines')
+    trace1 = go.Scatter(x=res.index, y=res["prediction"],name="Prediction", mode='lines')
+    trace3 = go.Scatter(x=res.index, y=res["memory_used"],name="Test", mode='lines')
 
-        trace2 = go.Scatter(x=df.index, y=df["memory_used"],name="DF data", mode='lines')
-        data=[trace1,trace2,trace3]
-        layout = go.Layout(
-            title=x
-        )
-        # fig = go.Figure(data=data, layout=layout)
-        # plot(fig, filename="prediction")
-        return future_forecast
-    except Exception as e:
-        print(e)
+    trace2 = go.Scatter(x=df.index, y=df["memory_used"],name="DF data", mode='lines')
+    data=[trace1,trace2,trace3]
+    layout = go.Layout(
+        title=x
+    )
+    # fig = go.Figure(data=data, layout=layout)
+    # plot(fig, filename="prediction")
+    print(future_forecast)
+    return future_forecast
+    # except Exception as e:
+    #     print(e)
 
 
 
 def arima_model():
     consumer = KafkaConsumer(
     "collectd",
-    group_id='arima3',
+    group_id='arima',
     auto_offset_reset="earliest",
     enable_auto_commit=True,
     bootstrap_servers=["152.46.17.159:9092"],

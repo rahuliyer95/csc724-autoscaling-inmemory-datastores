@@ -1,0 +1,24 @@
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - Probing node bootstrap broker version
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - Broker version identifed as 1.0.0
+kafka.conn - INFO - Set configuration api_version=(1, 0, 0) to skip auto check_version requests on startup
+kafka.consumer.subscription_state - INFO - Updating subscribed topics to: ('collectd',)
+kafka.cluster - INFO - Group coordinator for arima is BrokerMetadata(nodeId=0, host='vm17-159.vcl.ncsu.edu', port=9092, rack=None)
+kafka.coordinator - INFO - Discovered coordinator 0 for group arima
+kafka.coordinator - INFO - Starting new heartbeat thread
+kafka.coordinator.consumer - INFO - Revoking previously assigned partitions set() for group arima
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.coordinator - INFO - (Re-)joining group arima
+kafka.coordinator - INFO - Elected group leader -- performing partition assignments using range
+kafka.coordinator - INFO - Successfully joined group arima with generation 11
+kafka.consumer.subscription_state - INFO - Updated partition assignment: [TopicPartition(topic='collectd', partition=0)]
+kafka.coordinator.consumer - INFO - Setting newly assigned partitions {TopicPartition(topic='collectd', partition=0)} for group arima
+kafka.coordinator - INFO - Stopping heartbeat thread
+kafka.coordinator - INFO - Leaving consumer group (arima).
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+root - INFO - 2
+root - INFO - 2
+root - INFO - 0

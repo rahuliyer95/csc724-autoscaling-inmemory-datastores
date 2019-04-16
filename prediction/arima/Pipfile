@@ -17,6 +17,7 @@ matplotlib = "*"
 statsmodels = "*"
 cufflinks = "*"
 
+
 [requires]
 python_version = "3.7"
 
