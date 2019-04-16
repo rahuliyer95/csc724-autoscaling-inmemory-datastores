@@ -54,14 +54,16 @@ def scale_up(kafka_host, kafka_port):
     master_name = 'csc724-redis-%d' % (new_node_id)
     slave_name = 'csc724-redis-slave-%d' % (new_node_id)
 
-    LOG.info('Creating new master %s and new slave %s', master_name, slave_name)
-
+    LOG.info('Creating new master %s', master_name)
     az.add_redis_node(master_name, kafka_host, kafka_port)
-    az.add_redis_node(slave_name, kafka_host, kafka_port)
 
     LOG.info('Waiting for %s container to be created...', master_name)
-    master_container_grp = az.wait_for_container(master_name)
-    LOG.debug('Master container %r', master_container_grp.as_dict())
+    try:
+        master_container_grp = az.wait_for_container(master_name)
+        LOG.debug('Master container %r', master_container_grp.as_dict())
+    except Exception:
+        LOG.error('Failed to create master container')
+        return
 
     LOG.info('Adding master to cluster')
     rh.join_cluster(master_container_grp, cluster)
@@ -78,6 +80,9 @@ def scale_up(kafka_host, kafka_port):
     LOG.info('Rebalancing cluster')
     rh.cluster_rebalance(cluster)
 
+    LOG.info('Creating new slave %s', slave_name)
+    az.add_redis_node(slave_name, kafka_host, kafka_port)
+
     LOG.info('Waiting for %s container to be created...', slave_name)
     slave_container_grp = az.wait_for_container(slave_name)
     LOG.debug('Slave container %r', slave_container_grp.as_dict())
@@ -85,12 +90,13 @@ def scale_up(kafka_host, kafka_port):
     LOG.info('Adding slave to cluster')
     rh.join_cluster(slave_container_grp, cluster)
 
-    time.sleep(1)
+    time.sleep(2)
 
     LOG.info('Attaching slave to master')
     rh.attach_slave(master_container_grp, slave_container_grp)
 
-    LOG.info('Scale up complete')
+    LOG.info('Scale up complete! Fixing cluster just in case ;)')
+    rh.cluster_fix(cluster)
 
 
 def scale_down():
@@ -112,21 +118,25 @@ def scale_down():
     slave_name = 'csc724-redis-slave-%d' % (max_node_id)
 
     LOG.info('Waiting for slave container group')
-    slave_container_grp = None
     try:
         slave_container_grp = az.wait_for_container(slave_name)
         LOG.debug('Slave container %r', slave_container_grp.as_dict())
     except Exception:
         LOG.error('Unable to get slave container')
+        slave_container_grp = None
 
     if slave_container_grp:
         LOG.info('Removing slave %s from cluster', slave_name)
         rh.del_node(slave_container_grp, cluster)
 
         LOG.info('Removing %s from Azure', slave_name)
-        az.del_node(slave_name)
+        az.del_redis_node(slave_name)
 
     master_container_grp = cluster.pop()
+
+    if not master_container_grp:
+        LOG.error('Invalid master container group')
+        return
 
     LOG.info('Resharding')
     rh.reshard(master_container_grp, cluster)
@@ -141,7 +151,8 @@ def scale_down():
     LOG.info('Removing %s from Azure', slave_name)
     az.del_redis_node(master_name)
 
-    LOG.info('Scale down complete')
+    LOG.info('Scale down complete! Fixing cluster just in case ;)')
+    rh.cluster_fix(cluster)
 
 
 @click.command()

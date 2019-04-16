@@ -58,7 +58,7 @@ def get_node_id(source_ip, host):
     grep_ps = subprocess.Popen(['grep', host], stdout=subprocess.PIPE, stdin=nodes_ps.stdout)
     node_id = subprocess.check_output(['awk', '{print $1}'], stdin=grep_ps.stdout)
     nodes_ps.wait()
-    return node_id.strip() if node_id else None
+    return node_id.decode('utf-8').strip() if node_id else None
 
 
 @retry(retry_on_result=lambda r: not r, stop_max_attempt_number=15, wait_fixed=1000)
@@ -68,7 +68,7 @@ def attach_slave(master_cntr_grp, slave_cntr_grp):
     master_node_id = get_node_id(slave_cntr_grp.ip_address.ip, master_cntr_grp.ip_address.ip)
 
     if not master_node_id:
-        LOG.error('Unable to extract master node id from %s', master_cntr_grp.ip_address.ip)
+        LOG.error('Unable to extract master node id from %s', slave_cntr_grp.ip_address.ip)
         return False
 
     result = subprocess.run([
