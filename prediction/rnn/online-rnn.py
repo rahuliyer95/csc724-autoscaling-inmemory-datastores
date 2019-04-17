@@ -13,7 +13,7 @@ from keras import Sequential
 from keras.layers import Dense, LSTM
 status='None'
 def rnn():
-    consumer = KafkaConsumer('collectd', auto_offset_reset='earliest',
+    consumer = KafkaConsumer('collectd', auto_offset_reset='earliest',group_id='rnn2', enable_auto_commit=True,
                              bootstrap_servers=['152.46.17.159:9092'], consumer_timeout_ms=10000)
     memory_redis = []
     time=[]
@@ -39,17 +39,6 @@ def rnn():
             else:
                 memory_hashmap[result[0]['time']]=memory_hashmap.get(result[0]['time'])+result[0]["values"][0]
             time.append(result[0]['time'])
-        # if result[0]["type"] == "memory" and result[0]["plugin"] == "memory" and result[0]["type_instance"] == "used":
-        #     if result[0]["values"][0]:
-        #         if not math.isnan(float(result[0]["values"][0])):
-        #             memory_host[result[0]["host"]].append(result[0]["values"][0])
-        #             # memory_redis.append(result[0]["values"][0])
-        #             timestamp_host[result[0]["host"]].append(result[0]["time"])
-        #
-        # for values in zip(*memory_host.values()):
-        #     memory_redis.append(sum(values))
-        # for values in zip(*timestamp_host.values()):
-        #     time_stamp.append(sum(values) / (len(values)))
 
         if result[0]['host'] not in nodes_count:
             nodes_count[result[0]['host']]=1
@@ -75,15 +64,13 @@ def rnn():
 
 
     latency=[x / len(nodes_count.keys()) for x in list(latency_hashmap.values())]
-    #latency=latency_hashmap/nodes_count
     latency=latency[len(latency)-1000:]
 
 
 
-    #cpu=cpu_hashmap/nodes_count
+
     cpu=[y / len(nodes_count.keys()) for y in list(cpu_hashmap.values())]
     cpu=cpu[max(0,len(cpu)-1000):]
-    print(time_stamp,"this is ")
 
 
     print("Number of nodes in cluster is ",len(nodes_count.keys()))
@@ -103,7 +90,7 @@ def rnn():
 
     lookback = 100
 
-    test_size = int(.3 * len(redis_data))
+    test_size = int(len(redis_data))
     X = []
     y = []
     for i in range(len(redis_data) - lookback - 1):
@@ -119,54 +106,49 @@ def rnn():
     X = X.reshape(X.shape[0],lookback, 2)
     X_test = X_test.reshape(X_test.shape[0],lookback, 2)
 
-    model = Sequential()
-    model.add(LSTM(units=30, return_sequences= True, input_shape=(X.shape[1],2)))
-    model.add(LSTM(units=30, return_sequences=True))
-    model.add(LSTM(units=30))
-    model.add(Dense(units=1))
-    print(model.summary())
-    model.compile(optimizer='adam', loss='mean_squared_error')
-    model.fit(X, y, epochs=10, batch_size=32)
-    filename = 'rnn_model.sav'
-    pickle.dump(model, open(filename, 'wb'))
 
-
-    loaded_model = pickle.load(open(filename, 'rb'))
+    loaded_model = pickle.load(open('rnn_model.sav', 'rb'))
 
     predicted_value= loaded_model.predict(X_test)
-    avg_value=sum(predicted_value)/len(predicted_value)
-    print(avg_value[0])
-    if(avg_value[0]>0.70):
+    print(len(predicted_value),"this is length of predicted value")
+    print("sum of predicted value",sum(predicted_value))
+    avg_value=0
+    if(len(predicted_value)>0):
+        avg_value=sum(predicted_value)/len(predicted_value)
+
+
+    if((avg_value[0]/1024)>0.70*(len(nodes_count.keys())*1024*1024)):
         status='up'
-    elif(avg_value[0]<0.30):
+    elif((avg_value[0]/1024)<0.30*(len(nodes_count.keys()))*1024*1024):
         status='down'
     else:
         status='no'
     print(status,"this is the status")
     predicted=[]
     i=0
+
     while i < len(predicted_value):
         predicted.append(predicted_value[i][0])
         i += 1
     autoScale = json.dumps({
         'status_of_rnn': status,
-        'rnn_load': float(avg_value[0])
+        'rnn_load': avg_value[0]/(1024*1024)
     })
 
 
-
-    rms = sqrt(mean_squared_error(Y_test,predicted))
-    print(predicted_value,"this is predicted value")
-    print(Y_test,"this is actual value")
-    plt.plot(predicted_value, color= 'red',label='predicted')
-    plt.plot(input_data[lookback:test_size+(2*lookback),1], color='green',label='actual')
-    #plt.plot(Y_test, color='green',label='actual')
-    plt.title("Memory based prediction")
-    plt.xlabel("Time")
-    plt.ylabel("Memory")
-    plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-    plt.show()
-
+    #
+    # rms = sqrt(mean_squared_error(Y_test,predicted))
+    # print(predicted_value,"this is predicted value")
+    # print(Y_test,"this is actual value")
+    # plt.plot(predicted_value, color= 'red',label='predicted')
+    # plt.plot(input_data[lookback:test_size+(2*lookback),1], color='green',label='actual')
+    # #plt.plot(Y_test, color='green',label='actual')
+    # plt.title("Memory based prediction")
+    # plt.xlabel("Time")
+    # plt.ylabel("Memory")
+    # plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+    # plt.show()
+    print(autoScale)
     return autoScale
 
 
