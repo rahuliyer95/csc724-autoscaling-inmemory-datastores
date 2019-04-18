@@ -3,11 +3,14 @@ import producer
 import threading
 import json
 from threading import Timer
-from rnn import multivariate_rnn
+
+from keras.backend import rnn
+from rnn import online_rnn
 def predict():
     arima_result = arima.arima_model()
-    rnn_result=multivariate_rnn.rnn()
-
+    rnn_result=online_rnn.rnn()
+    
+    arima_data=json.loads(arima_result)
     rnn_data=json.loads(rnn_result)
     rnn_status=rnn_data["status_of_rnn"]
 
