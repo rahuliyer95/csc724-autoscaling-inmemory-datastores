@@ -52,7 +52,7 @@ def scale_up(kafka_host, kafka_port):
 
     new_node_id = max((int(n.name.split('-')[-1]) for n in cluster), default=0) + 1
     master_name = 'csc724-redis-%d' % (new_node_id)
-    slave_name = 'csc724-redis-slave-%d' % (new_node_id)
+    # slave_name = 'csc724-redis-slave-%d' % (new_node_id)
 
     LOG.info('Creating new master %s', master_name)
     az.add_redis_node(master_name, kafka_host, kafka_port)
@@ -77,26 +77,27 @@ def scale_up(kafka_host, kafka_port):
 
     time.sleep(1)
 
-    LOG.info('Rebalancing cluster')
-    rh.cluster_rebalance(cluster)
+    # LOG.info('Rebalancing cluster')
+    # rh.cluster_rebalance(cluster)
 
-    LOG.info('Creating new slave %s', slave_name)
-    az.add_redis_node(slave_name, kafka_host, kafka_port)
+    # LOG.info('Creating new slave %s', slave_name)
+    # az.add_redis_node(slave_name, kafka_host, kafka_port)
 
-    LOG.info('Waiting for %s container to be created...', slave_name)
-    slave_container_grp = az.wait_for_container(slave_name)
-    LOG.debug('Slave container %r', slave_container_grp.as_dict())
+    # LOG.info('Waiting for %s container to be created...', slave_name)
+    # slave_container_grp = az.wait_for_container(slave_name)
+    # LOG.debug('Slave container %r', slave_container_grp.as_dict())
 
-    LOG.info('Adding slave to cluster')
-    rh.join_cluster(slave_container_grp, cluster)
+    # LOG.info('Adding slave to cluster')
+    # rh.join_cluster(slave_container_grp, cluster)
 
-    time.sleep(2)
+    # time.sleep(2)
 
-    LOG.info('Attaching slave to master')
-    rh.attach_slave(master_container_grp, slave_container_grp)
+    # LOG.info('Attaching slave to master')
+    # rh.attach_slave(master_container_grp, slave_container_grp)
 
-    LOG.info('Scale up complete! Fixing cluster just in case ;)')
-    rh.cluster_fix(cluster)
+    LOG.info('Scale up complete!')
+    # LOG.info('Fixing cluster just in case ;)')
+    # rh.cluster_fix(cluster)
 
 
 def scale_down():
@@ -115,22 +116,22 @@ def scale_down():
         return
 
     master_name = 'csc724-redis-%d' % (max_node_id)
-    slave_name = 'csc724-redis-slave-%d' % (max_node_id)
+    # slave_name = 'csc724-redis-slave-%d' % (max_node_id)
 
-    LOG.info('Waiting for slave container group')
-    try:
-        slave_container_grp = az.wait_for_container(slave_name)
-        LOG.debug('Slave container %r', slave_container_grp.as_dict())
-    except Exception:
-        LOG.error('Unable to get slave container')
-        slave_container_grp = None
+    # LOG.info('Waiting for slave container group')
+    # try:
+    #     slave_container_grp = az.wait_for_container(slave_name)
+    #     LOG.debug('Slave container %r', slave_container_grp.as_dict())
+    # except Exception:
+    #     LOG.error('Unable to get slave container')
+    #     slave_container_grp = None
 
-    if slave_container_grp:
-        LOG.info('Removing slave %s from cluster', slave_name)
-        rh.del_node(slave_container_grp, cluster)
+    # if slave_container_grp:
+    #     LOG.info('Removing slave %s from cluster', slave_name)
+    #     rh.del_node(slave_container_grp, cluster)
 
-        LOG.info('Removing %s from Azure', slave_name)
-        az.del_redis_node(slave_name)
+    #     LOG.info('Removing %s from Azure', slave_name)
+    #     az.del_redis_node(slave_name)
 
     master_container_grp = cluster.pop()
 
@@ -148,10 +149,11 @@ def scale_down():
 
     time.sleep(1)
 
-    LOG.info('Removing %s from Azure', slave_name)
-    az.del_redis_node(master_name)
+    # LOG.info('Removing %s from Azure', slave_name)
+    # az.del_redis_node(master_name)
 
-    LOG.info('Scale down complete! Fixing cluster just in case ;)')
+    LOG.info('Scale down complete!')
+    LOG.info('Fixing cluster just in case ;)')
     rh.cluster_fix(cluster)
 
 
