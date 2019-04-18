@@ -19,6 +19,7 @@ from sklearn.metrics import mean_absolute_error
 from collections import defaultdict
 import json
 import logging
+import itertools
 
 logging.basicConfig(filename='app.log', level=logging.INFO, filemode='w', format='%(name)s - %(levelname)s - %(message)s')
 
@@ -27,10 +28,11 @@ def analyze(predict,memory_host):
     peak_value=max(predict["prediction"])
     average_value=sum(predict["prediction"])/len(predict)
     nodes=len(memory_host.keys())
-    print(average_value/(nodes*1024*1024))
-    if average_value/(nodes*1024*1024) >0.7:
+    print(average_value)
+    print((2*average_value)/(nodes*1024*1024))
+    if (2*average_value)/(nodes*1024*1024) >0.7:
         scale="up"
-    elif average_value/(nodes*1024*1024) <0.3:
+    elif (2*average_value)/(nodes*1024*1024) <0.3:
         scale="down"
     else:
         scale="no"
@@ -51,26 +53,28 @@ def predict_arima(df):
         mode = 'lines+markers'
     )
     data = [trace]
-    # plot(data, filename="memory-used-overtime")
-    # pm.plot_pacf(df,show=False).savefig('pacf.png')
-    # pm.plot_acf(df,show=False).savefig('acf.png')
+    plot(data, filename="memory-used-overtime")
+    pm.plot_pacf(df,show=False).savefig('pacf.png')
+    pm.plot_acf(df,show=False).savefig('acf.png')
 
     ############ tests
+    nd=0
+    nsd=0
     try:
         adf_test=ADFTest(alpha=0.05)
         p_val, should_diff = adf_test.is_stationary(df["memory_used"])    
 
         nd = ndiffs(df, test='adf')
         logging.info(nd)
-        nsd = nsdiffs(df,52)
+        nsd = nsdiffs(df,12)
         logging.info(nd)
     except:
         print("Exception on tests")
 
     ###############
-    ch_test=CHTest(52)
+    ch_test=CHTest(12)
     try:
-        logging.info(ch_test.estimate_seasonal_differencing_term(df))
+        ch_test=ch_test.estimate_seasonal_differencing_term(df)
     except Exception as e:
         logging.error(e)
     # x=seasonal_decompose(df, model='multiplicative', filt=None, freq=40, two_sided=True, extrapolate_trend=0)
@@ -79,16 +83,16 @@ def predict_arima(df):
     train, test = train_test_split(df,shuffle=False, test_size=0.2)
 
     p=1
-    q=1
-    d=1
+    q=0
+    d=nd
     pdq=[]
     aic=[]
 
             
     # try:
     stepwise_model = ARIMA(
-        order=(p,d,q),
-        seasonal_order=(0,1,0,12),
+        order=(p,nd,q),
+        seasonal_order=(0,ch_test,0,12),
         suppress_warnings=True, 
         scoring='mse'
     )
@@ -111,8 +115,8 @@ def predict_arima(df):
     layout = go.Layout(
         title=x
     )
-    # fig = go.Figure(data=data, layout=layout)
-    # plot(fig, filename="prediction")
+    fig = go.Figure(data=data, layout=layout)
+    plot(fig, filename="prediction")
     print(future_forecast)
     return future_forecast
     # except Exception as e:
@@ -123,7 +127,7 @@ def predict_arima(df):
 def arima_model():
     consumer = KafkaConsumer(
     "collectd",
-    group_id='arima',
+    group_id='arima3',
     auto_offset_reset="earliest",
     enable_auto_commit=True,
     bootstrap_servers=["152.46.17.159:9092"],
@@ -140,10 +144,10 @@ def arima_model():
         if result[0]["type"] == "memory" and result[0]["plugin"] == "memory" and  result[0]["type_instance"] == "used":
             if result[0]["values"][0]:
                 if not math.isnan(float(result[0]["values"][0])):
-
-                    print(value)
+                    print(result[0]["host"])
+                    print(result[0]["values"][0])
                     try:
-                        memory_host[result[0]["host"]].append(result[0]["values"][0]/1024*1024)
+                        memory_host[result[0]["host"]].append(result[0]["values"][0])
                         timestamp_host[result[0]["host"]].append(result[0]["time"])
                     except Exception as e:
                         logging.error(e)
@@ -152,11 +156,10 @@ def arima_model():
     for hosts in memory_host.keys():
         print(memory_host[hosts])
             
-    for values in zip(*memory_host.values()):
+    for values in itertools.zip_longest(*memory_host.values(),fillvalue=0):
         memory_redis.append(sum(values)/1024)
-    for values in zip(*timestamp_host.values()):
-        time_stamp.append(sum(values)/(len(values)))
-
+    for values in itertools.zip_longest(*timestamp_host.values(),fillvalue=0):
+        time_stamp.append(max(values))
     consumer.close()
     # memory_redis=memory_redis[max(1000,len(memory_redis)-1000):]
     # time_stamp=time_stamp[max(0,len(time_stamp)-1000):]
@@ -172,3 +175,4 @@ def arima_model():
     df.set_index("time_stamp",inplace=True)
     forecast = predict_arima(df)
     return analyze(forecast,memory_host)
+
