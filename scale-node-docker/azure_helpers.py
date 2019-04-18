@@ -113,8 +113,8 @@ def del_redis_node(name):
     aci.container_groups.delete(_RESOURCE_GROUP, name)
 
 
-@timeout_decorator.timeout(5)
 @retry(retry_on_exception=lambda e: True, stop_max_attempt_number=15, wait_fixed=1000)
+@timeout_decorator.timeout(5)
 def wait_for_container(name):
     """ Wait for container to be created """
     aci = _get_aci_client()

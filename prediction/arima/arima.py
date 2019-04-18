@@ -127,7 +127,7 @@ def predict_arima(df):
 def arima_model():
     consumer = KafkaConsumer(
     "collectd",
-    group_id='arima3',
+    group_id='arima',
     auto_offset_reset="earliest",
     enable_auto_commit=True,
     bootstrap_servers=["152.46.17.159:9092"],
