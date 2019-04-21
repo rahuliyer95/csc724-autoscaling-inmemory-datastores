@@ -22,7 +22,7 @@ readmodifywriteproportion=0
 requestdistribution=zipfian"
 }
 
-SCRIPT_DIR="$(dirname $0)"
+SCRIPT_DIR="$(dirname "$0")"
 
 [ -r "$SCRIPT_DIR/.redis_custom_workload_env" ] && . "$SCRIPT_DIR/.redis_custom_workload_env"
 
@@ -47,9 +47,13 @@ echo "Starting ycsb load..." # >> "$LOG_FILE"
 #   -p "redis.host=${REDIS_HOST}" \
 #   -p "redis.cluster=true" # >> "$LOG_FILE" 2>&1
 
+TOTAL="$(wc -l "$WORKLOAD_CURVE_FILE" | awk '{print $1}')"
+CURR=1
+
 # Run workload
 while read -r opCount; do
-  echo "Running workload with operation count $opCount..."
+  echo "Running workload ${CURR} / ${TOTAL} with operation count ${opCount}..."
+
   gen_workload "$opCount" >/tmp/workload
 
   "$YCSB_DIR/bin/ycsb" run redis -s \
@@ -57,4 +61,6 @@ while read -r opCount; do
     -P "/tmp/workload" \
     -p "redis.host=${REDIS_HOST}" \
     -p "redis.cluster=true" # >> "$LOG_FILE" 2>&1
+
+  CURR=$((CURR + 1))
 done <"$WORKLOAD_CURVE_FILE"
