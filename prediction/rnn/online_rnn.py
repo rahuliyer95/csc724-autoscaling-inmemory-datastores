@@ -20,7 +20,7 @@ from keras import Sequential
 from keras.layers import Dense, LSTM
 status='None'
 def rnn():
-    consumer = KafkaConsumer('collectd', auto_offset_reset='earliest',group_id='rnn', enable_auto_commit=True,
+    consumer = KafkaConsumer('collectd', auto_offset_reset='earliest',group_id='rnns2', enable_auto_commit=True,
                              bootstrap_servers=['152.46.17.159:9092'], consumer_timeout_ms=10000)
     memory_redis = []
     time=[]
@@ -59,8 +59,8 @@ def rnn():
 
     consumer.close()
 
-    memory_redis = memory_redis[max(0, len(memory_redis) - 1000):]
-    time_stamp = time_stamp[max(0, len(time_stamp) - 1000):]
+    memory_redis = memory_redis[max(0, len(memory_redis) - 100):]
+    time_stamp = time_stamp[max(0, len(time_stamp) - 100):]
 
     print(memory_redis, "this is redis memory")
 
@@ -72,14 +72,14 @@ def rnn():
     avg_value=0
     predicted=[]
     # try:
-
+    average=0
     redis_data = pd.read_csv("collectd-data-multivariate.csv")
     input_feature= redis_data.iloc[:,[0,1]].values
     input_data = input_feature
     sc= MinMaxScaler(feature_range=(0,1))
     input_data[:,0:2] = sc.fit_transform(input_feature[:,:])
 
-    lookback = 100
+    lookback = 10
 
     test_size = int(len(redis_data))
     X = []
@@ -122,9 +122,9 @@ def rnn():
     print("this is avergae value",average)
     autoScale = json.dumps({
         'nodes': len(memory_host.keys()),
-        'peak_value':max(predicted),
+        'peak_value': str(max(predicted)),
         'scale': status,
-        'average_value': average
+        'average_value': str(average)
     })
 
     print("Predicted Value",predicted_value)
