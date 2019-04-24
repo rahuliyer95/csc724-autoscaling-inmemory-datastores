@@ -83,7 +83,7 @@ def add_redis_node(name, kafka_host, kafka_port):
         name=name,
         image=_CONTAINER_IMAGE,
         resources=acimodels.ResourceRequirements(
-            requests=acimodels.ResourceRequests(memory_in_gb=0.5, cpu=1.0)),
+            requests=acimodels.ResourceRequests(memory_in_gb=1.0, cpu=1.0)),
         environment_variables=envs,
         ports=[acimodels.ContainerPort(port=p) for p in _REDIS_PORTS])
 
