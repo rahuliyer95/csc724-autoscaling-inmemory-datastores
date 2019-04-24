@@ -40,7 +40,10 @@ def setup_logger(verbose):
 
 
 def get_kafka_consumer(host, port, topic):
-    return KafkaConsumer(topic, bootstrap_servers='%s:%d' % (host, port), group_id='scale')
+    return KafkaConsumer(topic,
+                         bootstrap_servers='%s:%d' % (host, port),
+                         group_id='scale',
+                         auto_offset_reset='earliest')
 
 
 def scale_up(kafka_host, kafka_port):
@@ -149,8 +152,8 @@ def scale_down():
 
     time.sleep(1)
 
-    # LOG.info('Removing %s from Azure', slave_name)
-    # az.del_redis_node(master_name)
+    LOG.info('Removing %s from Azure', master_name)
+    az.del_redis_node(master_name)
 
     LOG.info('Scale down complete!')
     LOG.info('Fixing cluster just in case ;)')
