@@ -1,9 +1,13 @@
 import pickle
 from collections import defaultdict
 from kafka import KafkaConsumer, KafkaProducer
+from decimal import Decimal
+
 import json
 import csv
 import math
+import traceback
+import sys
 from math import sqrt
 import numpy as np
 import pandas as pd
@@ -16,7 +20,7 @@ from keras import Sequential
 from keras.layers import Dense, LSTM
 status='None'
 def rnn():
-    consumer = KafkaConsumer('collectd', auto_offset_reset='earliest',group_id='rnn1', enable_auto_commit=True,
+    consumer = KafkaConsumer('collectd', auto_offset_reset='earliest',group_id='rnn', enable_auto_commit=True,
                              bootstrap_servers=['152.46.17.159:9092'], consumer_timeout_ms=10000)
     memory_redis = []
     time=[]
@@ -67,85 +71,87 @@ def rnn():
 
     avg_value=0
     predicted=[]
-    try:
+    # try:
 
-        redis_data = pd.read_csv("collectd-data-multivariate.csv")
-        input_feature= redis_data.iloc[:,[0,1]].values
-        input_data = input_feature
-        sc= MinMaxScaler(feature_range=(0,1))
-        input_data[:,0:2] = sc.fit_transform(input_feature[:,:])
+    redis_data = pd.read_csv("collectd-data-multivariate.csv")
+    input_feature= redis_data.iloc[:,[0,1]].values
+    input_data = input_feature
+    sc= MinMaxScaler(feature_range=(0,1))
+    input_data[:,0:2] = sc.fit_transform(input_feature[:,:])
 
-        lookback = 100
+    lookback = 100
 
-        test_size = int(len(redis_data))
-        X = []
-        y = []
-        for i in range(len(redis_data) - lookback - 1):
-            t = []
-            for j in range(0, lookback):
-                t.append(input_data[[(i + j)], :])
-            X.append(t)
-            y.append(input_data[i + lookback, 1])
+    test_size = int(len(redis_data))
+    X = []
+    y = []
+    for i in range(len(redis_data) - lookback - 1):
+        t = []
+        for j in range(0, lookback):
+            t.append(input_data[[(i + j)], :])
+        X.append(t)
+        y.append(input_data[i + lookback, 1])
 
-        X, y= np.array(X), np.array(y)
-        X_test = X[:test_size+lookback]
-        Y_test=y[:test_size+lookback]
-        X = X.reshape(X.shape[0],lookback, 2)
-        X_test = X_test.reshape(X_test.shape[0],lookback, 2)
-
-
-        loaded_model = pickle.load(open('rnn_model.sav', 'rb'))
-
-        predicted_value= loaded_model.predict(X_test)
-        
-
-        if (len(predicted_value) > 0):
-            avg_value = sum(predicted_value) / len(predicted_value)
-            avg_value= avg_value * 100000000
-        if((avg_value[0]/1024)>0.70*(len(nodes_count.keys())*1024*1024)):
-            status='up'
-        elif((avg_value[0]/1024)<0.30*(len(nodes_count.keys()))*1024*1024):
-            status='down'
-        else:
-            status='no'
-        print(status,"this is the status")
-        i=0
-        
-        while i < len(predicted_value):
-            predicted.append(predicted_value[i][0])
-            i += 1
-        
-        autoScale = json.dumps({
-            'nodes': len(memory_host.keys()),
-            'peak_value':0,
-            'scale': status,
-            'average_value': 0
-        })
-        
-        print("Predicted Value",predicted_value)
-        print("Current Value",X_test)
+    X, y= np.array(X), np.array(y)
+    X_test = X[:test_size+lookback]
+    Y_test=y[:test_size+lookback]
+    X = X.reshape(X.shape[0],lookback, 2)
+    X_test = X_test.reshape(X_test.shape[0],lookback, 2)
 
 
-        #rms = sqrt(mean_squared_error(Y_test,predicted))
-        # plt.plot(predicted_value, color= 'red',label='predicted')
-        # plt.plot(input_data[lookback:test_size+(2*lookback),1], color='green',label='actual')
-        # #plt.plot(Y_test, color='green',label='actual')
-        # plt.title("Memory based prediction")
-        # plt.xlabel("Time")
-        # plt.ylabel("Memory")
-        # plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-        # plt.show()
-        # print(autoScale)
-        return autoScale
-    except Exception as e:
-        autoScale = json.dumps({
-            'average_value':0,
-            'peak_value':0,
-            'scale': 'no',
-            'nodes': len(memory_host.keys()),
-        })
-        print(e)
-        return autoScale
+    loaded_model = pickle.load(open('rnn_model.sav', 'rb'))
+
+    predicted_value= loaded_model.predict(X_test)
+    print(np.sum(predicted_value),"sum of predicted value")
+    print("lenght of predicted value",len(predicted_value))
+    print(type(predicted_value))
+    if (len(predicted_value) > 0):
+        average = np.average(predicted_value)
+        average= average * 100000000
+    if((average/1024)>0.70*(len(nodes_count.keys())*1024*1024)):
+        status='up'
+    elif((average/1024)<0.30*(len(nodes_count.keys()))*1024*1024):
+        status='down'
+    else:
+        status='no'
+    print(status,"this is the status")
+    i=0
+
+    while i < len(predicted_value):
+        predicted.append(predicted_value[i][0])
+        i += 1
+    print("this is avergae value",average)
+    autoScale = json.dumps({
+        'nodes': len(memory_host.keys()),
+        'peak_value':max(predicted),
+        'scale': status,
+        'average_value': average
+    })
+
+    print("Predicted Value",predicted_value)
+    print("Current Value",X_test)
+
+
+    rms = sqrt(mean_squared_error(Y_test,predicted))
+    plt.plot(predicted_value, color= 'red',label='predicted')
+    plt.plot(input_data[lookback:test_size+(2*lookback),1], color='green',label='actual')
+    #plt.plot(Y_test, color='green',label='actual')
+    plt.title("Memory based prediction")
+    plt.xlabel("Time")
+    plt.ylabel("Memory")
+    plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+    plt.show()
+    print(autoScale)
+    return autoScale
+    # except Exception as e:
+    #     exc_info = sys.exc_info()
+    #     autoScale = json.dumps({
+    #         'average_value':0,
+    #         'peak_value':0,
+    #         'scale': 'no',
+    #         'nodes': len(memory_host.keys()),
+    #     })
+    #     print(traceback.print_exception(*exc_info))
+    #     return autoScale
 rnn()
 
 
