@@ -32,8 +32,8 @@ def predict():
         autoScaleData ={
             'peak_value': arima_data['peak_value'],
             'average_value': arima_data['average_value'],
-            'nodes': arima_data['nodes'],
-            'scale': arima_data['scale']
+            'nodes': rnn_data['nodes'],
+            'scale': rnn_data['scale']
         }
     print(json.dumps(autoScaleData))
     send_data_producer(autoScaleData)

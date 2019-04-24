@@ -118,7 +118,7 @@ def predict_arima(df):
         Find p,q dynamically
     '''
 
-    p=6
+    p=4
     q=1
     d=nd    
 
@@ -163,7 +163,7 @@ def predict_arima(df):
 def arima_model():
     consumer = KafkaConsumer(
     "collectd",
-    group_id='arima8',
+    group_id='arima2',
     auto_offset_reset="earliest",
     enable_auto_commit=True,
     bootstrap_servers=["152.46.17.159:9092"],

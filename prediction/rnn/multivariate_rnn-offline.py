@@ -75,7 +75,7 @@ try:
     sc= MinMaxScaler(feature_range=(0,1))
     input_data[:,0:2] = sc.fit_transform(input_feature[:,:])
 
-    lookback = 100
+    lookback = 10
 
     test_size = int(.3 * len(redis_data))
     X = []

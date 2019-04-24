@@ -3,15 +3,15 @@
 set -e
 
 error() {
-  echo $* >&2
+  echo "$@" >&2
   exit 1
 }
 
 gen_workload() {
-  # Records - 100,000
+  # Operations & Records - $1 / 10,000
   # not using $YCSB_RECORD_COUNT anymore
-  echo -ne "recordcount=${1:-1000}000
-operationcount=${1:-1000}000
+  echo -ne "recordcount=${1:-10000}
+operationcount=${1:-10000}
 workload=com.yahoo.ycsb.workloads.CoreWorkload
 readallfields=true
 readproportion=0.20
@@ -55,6 +55,12 @@ while read -r opCount; do
   echo "Running workload ${CURR} / ${TOTAL} with operation count ${opCount}..."
 
   gen_workload "$opCount" >/tmp/workload
+
+  "$YCSB_DIR/bin/ycsb" load redis -s \
+    -threads "$YCSB_THREAD_COUNT" \
+    -P "/tmp/workload" \
+    -p "redis.host=${REDIS_HOST}" \
+    -p "redis.cluster=true" # >> "$LOG_FILE" 2>&1
 
   "$YCSB_DIR/bin/ycsb" run redis -s \
     -threads "$YCSB_THREAD_COUNT" \

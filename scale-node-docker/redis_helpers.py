@@ -109,18 +109,18 @@ def reshard(cntr_grp, cluster):
 
         cntr_id = get_node_id(node.ip_address.ip, cntr_grp.ip_address.ip)
         if not cntr_id:
-            LOG.error('Unable to get id of %s', cntr_grp.name)
-            return
+            LOG.error('Unable to get id of base container %s', cntr_grp.name)
+            continue
 
         node_id = get_node_id(node.ip_address.ip, node.ip_address.ip)
 
         if not node_id:
-            LOG.error('Unable to find id for %s', node.name)
+            LOG.error('Unable to find id for cluster node %s', node.name)
             continue
 
         result = subprocess.run([
             _REDIS_COMMAND_PATH, '-h', node.ip_address.ip, '-p', _REDIS_PORT, '--cluster',
-            'reshard', cntr_grp.ip_address.ip + ':' + _REDIS_PORT, '--cluster-from', cntr_id,
+            'reshard', node.ip_address.ip + ':' + _REDIS_PORT, '--cluster-from', cntr_id,
             '--cluster-to', node_id, '--cluster-slots', '16384', '--cluster-yes'
         ])
 
