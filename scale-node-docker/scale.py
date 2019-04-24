@@ -149,8 +149,8 @@ def scale_down():
 
     time.sleep(1)
 
-    # LOG.info('Removing %s from Azure', slave_name)
-    # az.del_redis_node(master_name)
+    LOG.info('Removing %s from Azure', master_name)
+    az.del_redis_node(master_name)
 
     LOG.info('Scale down complete!')
     LOG.info('Fixing cluster just in case ;)')
