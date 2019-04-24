@@ -16,7 +16,7 @@ from keras import Sequential
 from keras.layers import Dense, LSTM
 status='None'
 def rnn():
-    consumer = KafkaConsumer('collectd', auto_offset_reset='earliest',group_id='rnn1', enable_auto_commit=True,
+    consumer = KafkaConsumer('collectd', auto_offset_reset='earliest',group_id='rnn4', enable_auto_commit=True,
                              bootstrap_servers=['152.46.17.159:9092'], consumer_timeout_ms=10000)
     memory_redis = []
     time=[]
@@ -39,19 +39,23 @@ def rnn():
 
                     print(value)
                     try:
-                        memory_host[result[0]["host"]].append(result[0]["values"][0] / 1024 * 1024)
+                        memory_host[result[0]["host"]].append(result[0]["values"][0] / 512 * 1024)
                         timestamp_host[result[0]["host"]].append(result[0]["time"])
                     except Exception as e:
                         logging.error(e)
                         continue
-
+    max_length=0
+    max_length_host=0
     for hosts in memory_host.keys():
         print(memory_host[hosts])
+        if(len(memory_host[hosts])>max_length):
+            max_length=len(memory_host[hosts])
+            max_length_host=hosts
 
     for values in itertools.zip_longest(*memory_host.values(), fillvalue=0):
         memory_redis.append(sum(values) / 1024)
-    for values in itertools.zip_longest(*timestamp_host.values(), fillvalue=0):
-        time_stamp.append(max(values))
+    for values in timestamp_host[max_length_host]:
+        time_stamp.append(values)
 
     consumer.close()
 
@@ -100,11 +104,11 @@ def rnn():
         
 
         if (len(predicted_value) > 0):
-            avg_value = sum(predicted_value) / len(predicted_value)
+            avg_value = np.sum(predicted_value) / len(predicted_value)
             avg_value= avg_value * 100000000
-        if((avg_value[0]/1024)>0.70*(len(nodes_count.keys())*1024*1024)):
+        if((avg_value/1024)>0.70*(len(nodes_count.keys())*1024*1024)):
             status='up'
-        elif((avg_value[0]/1024)<0.30*(len(nodes_count.keys()))*1024*1024):
+        elif((avg_value/1024)<0.30*(len(nodes_count.keys()))*1024*1024):
             status='down'
         else:
             status='no'
@@ -117,11 +121,11 @@ def rnn():
         
         autoScale = json.dumps({
             'nodes': len(memory_host.keys()),
-            'peak_value':0,
+            'peak_value':max(predicted_value),
             'scale': status,
-            'average_value': 0
+            'average_value': avg_value
         })
-        
+        print(autoScale)
         print("Predicted Value",predicted_value)
         print("Current Value",X_test)
 

@@ -7,7 +7,9 @@ import time
 
 from keras.backend import rnn
 from rnn import online_rnn
+import consumer
 def predict():
+    # consumer.consume()
     arima_result = arima.arima_model()
     rnn_result=online_rnn.rnn()
     
@@ -30,8 +32,8 @@ def predict():
         autoScaleData ={
             'peak_value': arima_data['peak_value'],
             'average_value': arima_data['average_value'],
-            'nodes': rnn_data['nodes'],
-            'scale': rnn_data['scale']
+            'nodes': arima_data['nodes'],
+            'scale': arima_data['scale']
         }
     print(json.dumps(autoScaleData))
     send_data_producer(autoScaleData)
@@ -42,4 +44,4 @@ def send_data_producer(result):
 
 while True:
     predict()
-    time.sleep(15*60)
+    time.sleep(7*60)
