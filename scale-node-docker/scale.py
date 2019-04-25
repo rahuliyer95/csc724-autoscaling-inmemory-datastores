@@ -42,7 +42,7 @@ def setup_logger(verbose):
 def get_kafka_consumer(host, port, topic):
     return KafkaConsumer(topic,
                          bootstrap_servers='%s:%d' % (host, port),
-                         group_id='scale',
+                         group_id='scale-ng',
                          auto_offset_reset='earliest')
 
 
@@ -80,8 +80,8 @@ def scale_up(kafka_host, kafka_port):
 
     time.sleep(1)
 
-    # LOG.info('Rebalancing cluster')
-    # rh.cluster_rebalance(cluster)
+    LOG.info('Rebalancing cluster')
+    rh.cluster_rebalance(cluster)
 
     # LOG.info('Creating new slave %s', slave_name)
     # az.add_redis_node(slave_name, kafka_host, kafka_port)
