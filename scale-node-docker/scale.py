@@ -3,6 +3,7 @@ import click
 import json
 import jsonschema
 import logging
+import os
 import redis_helpers as rh
 import time
 from kafka import KafkaConsumer
@@ -42,7 +43,7 @@ def setup_logger(verbose):
 def get_kafka_consumer(host, port, topic):
     return KafkaConsumer(topic,
                          bootstrap_servers='%s:%d' % (host, port),
-                         group_id='scale',
+                         group_id=os.getenv('KAFKA_GROUP_ID', 'scale'),
                          auto_offset_reset='earliest')
 
 
