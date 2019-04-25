@@ -7,18 +7,33 @@ error() {
   exit 1
 }
 
-gen_workload() {
+gen_load_workload() {
   # Operations & Records - $1 / 10,000
   # not using $YCSB_RECORD_COUNT anymore
   echo -ne "recordcount=${1:-10000}
 operationcount=${1:-10000}
 workload=com.yahoo.ycsb.workloads.CoreWorkload
 readallfields=true
-readproportion=0.20
-updateproportion=0.40
+readproportion=0
+updateproportion=0
 scanproportion=0
-insertproportion=0.40
+insertproportion=1
 readmodifywriteproportion=0
+requestdistribution=zipfian"
+}
+
+gen_read_workload() {
+  # Operations & Records - $1 / 10,000
+  # not using $YCSB_RECORD_COUNT anymore
+  echo -ne "recordcount=${1:-10000}
+operationcount=${1:-10000}
+workload=com.yahoo.ycsb.workloads.CoreWorkload
+readallfields=true
+readproportion=0.1
+updateproportion=0
+scanproportion=0
+insertproportion=0.80
+readmodifywriteproportion=0.1
 requestdistribution=zipfian"
 }
 
@@ -39,7 +54,7 @@ LOG_FILE="${LOG_FILE:-/tmp/redis_custom_workload.log}"
 
 echo "Starting ycsb load..." # >> "$LOG_FILE"
 
-# gen_workload "50" >/tmp/workload
+# gen_load_workload "$YCSB_RECORD_COUNT" >/tmp/workload
 
 # "$YCSB_DIR/bin/ycsb" load redis -s \
 #   -threads "$YCSB_THREAD_COUNT" \
@@ -52,15 +67,9 @@ CURR=1
 
 # Run workload
 while read -r opCount; do
-  echo "Running workload ${CURR} / ${TOTAL} with operation count ${opCount}..."
+  echo "Running workload ${CURR} / ${TOTAL} with operation count $((opCount * 1000))..."
 
-  gen_workload "$opCount" >/tmp/workload
-
-  "$YCSB_DIR/bin/ycsb" load redis -s \
-    -threads "$YCSB_THREAD_COUNT" \
-    -P "/tmp/workload" \
-    -p "redis.host=${REDIS_HOST}" \
-    -p "redis.cluster=true" # >> "$LOG_FILE" 2>&1
+  gen_read_workload "$((opCount * 1000))" >/tmp/workload
 
   "$YCSB_DIR/bin/ycsb" run redis -s \
     -threads "$YCSB_THREAD_COUNT" \

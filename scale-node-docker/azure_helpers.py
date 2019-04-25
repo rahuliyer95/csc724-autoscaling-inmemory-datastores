@@ -19,7 +19,7 @@ _DATADOG_API_KEY = os.getenv('DD_API_KEY', default='')
 _COLLECTD_INTERVAL = os.getenv('ENV_INTERVAL', default='')
 _REDIS_PORTS = [6379, 6380, 16379]
 _CONTAINER_IMAGE = 'rahuliyer95/csc724-redis-collectd'
-_RESOURCE_GROUP = 'csc724'
+_RESOURCE_GROUP = os.getenv('AZ_RESOURCE_GROUP', 'csc724')
 _NETWORK_PROFILE = 'aci-network-profile-csc724-default'
 _REDIS_MASTER_REGEX = re.compile(r'^csc724-redis-[0-9]*$')
 _REDIS_SLAVE_REGEX = re.compile(r'^csc724-redis-slave-[0-9]*$')
@@ -83,7 +83,7 @@ def add_redis_node(name, kafka_host, kafka_port):
         name=name,
         image=_CONTAINER_IMAGE,
         resources=acimodels.ResourceRequirements(
-            requests=acimodels.ResourceRequests(memory_in_gb=0.5, cpu=1.0)),
+            requests=acimodels.ResourceRequests(memory_in_gb=1.0, cpu=1.0)),
         environment_variables=envs,
         ports=[acimodels.ContainerPort(port=p) for p in _REDIS_PORTS])
 
