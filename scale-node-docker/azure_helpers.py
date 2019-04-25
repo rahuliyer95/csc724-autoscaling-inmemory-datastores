@@ -19,7 +19,7 @@ _DATADOG_API_KEY = os.getenv('DD_API_KEY', default='')
 _COLLECTD_INTERVAL = os.getenv('ENV_INTERVAL', default='')
 _REDIS_PORTS = [6379, 6380, 16379]
 _CONTAINER_IMAGE = 'rahuliyer95/csc724-redis-collectd'
-_RESOURCE_GROUP = 'csc724-ng'
+_RESOURCE_GROUP = 'csc724'
 _NETWORK_PROFILE = 'aci-network-profile-csc724-default'
 _REDIS_MASTER_REGEX = re.compile(r'^csc724-redis-[0-9]*$')
 _REDIS_SLAVE_REGEX = re.compile(r'^csc724-redis-slave-[0-9]*$')

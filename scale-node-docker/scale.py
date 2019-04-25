@@ -42,7 +42,7 @@ def setup_logger(verbose):
 def get_kafka_consumer(host, port, topic):
     return KafkaConsumer(topic,
                          bootstrap_servers='%s:%d' % (host, port),
-                         group_id='scale-ng',
+                         group_id='scale',
                          auto_offset_reset='earliest')
 
 
