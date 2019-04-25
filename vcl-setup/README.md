@@ -45,3 +45,14 @@ To allow services through firewall iptables setup needs to be done. Use the foll
 iptables -I INPUT -p TCP -s 0.0.0.0/0 --dport 2181 -j ACCEPT # Zookeeper
 iptables -I INPUT -p TCP -s 0.0.0.0/0 --dport 9092 -j ACCEPT # Kafka
 ```
+
+## Topics
+
+The system needs two topics `collectd` and `prediction` to function.
+
+Create them using the following commands
+
+```sh
+/opt/kafka/bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic collectd --partitions 1 --replication-factor 1
+/opt/kafka/bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic prediction --partitions 1 ---replication-factor 1
+```
