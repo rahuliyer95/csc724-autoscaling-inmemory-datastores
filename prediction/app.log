@@ -1,212 +1,449 @@
-kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
-kafka.conn - INFO - Probing node bootstrap broker version
-kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - Probing node bootstrap-0 broker version
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
 kafka.conn - INFO - Broker version identifed as 1.0.0
 kafka.conn - INFO - Set configuration api_version=(1, 0, 0) to skip auto check_version requests on startup
 kafka.consumer.subscription_state - INFO - Updating subscribed topics to: ('collectd',)
-kafka.cluster - INFO - Group coordinator for rnn2 is BrokerMetadata(nodeId=0, host='vm17-159.vcl.ncsu.edu', port=9092, rack=None)
-kafka.coordinator - INFO - Discovered coordinator 0 for group rnn2
+kafka.cluster - INFO - Group coordinator for arima5 is BrokerMetadata(nodeId=0, host='vm17-159.vcl.ncsu.edu', port=9092, rack=None)
+kafka.coordinator - INFO - Discovered coordinator 0 for group arima5
 kafka.coordinator - INFO - Starting new heartbeat thread
-kafka.coordinator.consumer - INFO - Revoking previously assigned partitions set() for group rnn2
+kafka.coordinator.consumer - INFO - Revoking previously assigned partitions set() for group arima5
 kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
 kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
-kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
-kafka.coordinator - INFO - (Re-)joining group rnn2
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.coordinator - INFO - (Re-)joining group arima5
 kafka.coordinator - INFO - Elected group leader -- performing partition assignments using range
-kafka.coordinator - INFO - Successfully joined group rnn2 with generation 57
+kafka.coordinator - INFO - Successfully joined group arima5 with generation 136
 kafka.consumer.subscription_state - INFO - Updated partition assignment: [TopicPartition(topic='collectd', partition=0)]
-kafka.coordinator.consumer - INFO - Setting newly assigned partitions {TopicPartition(topic='collectd', partition=0)} for group rnn2
+kafka.coordinator.consumer - INFO - Setting newly assigned partitions {TopicPartition(topic='collectd', partition=0)} for group arima5
 kafka.coordinator - INFO - Stopping heartbeat thread
-kafka.coordinator - INFO - Leaving consumer group (rnn2).
-kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
-tensorflow - WARNING - From /home/akshay/.local/lib/python3.5/site-packages/tensorflow/python/framework/op_def_library.py:263: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.
-Instructions for updating:
-Colocations handled automatically by placer.
-tensorflow - WARNING - From /home/akshay/.local/lib/python3.5/site-packages/tensorflow/python/ops/math_ops.py:3066: to_int32 (from tensorflow.python.ops.math_ops) is deprecated and will be removed in a future version.
-Instructions for updating:
-Use tf.cast instead.
-kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
-kafka.conn - INFO - Probing node bootstrap broker version
-kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
-kafka.conn - INFO - Broker version identifed as 1.0.0
-kafka.conn - INFO - Set configuration api_version=(1, 0, 0) to skip auto check_version requests on startup
-kafka.consumer.subscription_state - INFO - Updating subscribed topics to: ('collectd',)
-kafka.cluster - INFO - Group coordinator for arima2 is BrokerMetadata(nodeId=0, host='vm17-159.vcl.ncsu.edu', port=9092, rack=None)
-kafka.coordinator - INFO - Discovered coordinator 0 for group arima2
-kafka.coordinator - INFO - Starting new heartbeat thread
-kafka.coordinator.consumer - INFO - Revoking previously assigned partitions set() for group arima2
-kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
-kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
-kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
-kafka.coordinator - INFO - (Re-)joining group arima2
-kafka.coordinator - INFO - Elected group leader -- performing partition assignments using range
-kafka.coordinator - INFO - Successfully joined group arima2 with generation 57
-kafka.consumer.subscription_state - INFO - Updated partition assignment: [TopicPartition(topic='collectd', partition=0)]
-kafka.coordinator.consumer - INFO - Setting newly assigned partitions {TopicPartition(topic='collectd', partition=0)} for group arima2
-kafka.coordinator - INFO - Stopping heartbeat thread
-kafka.coordinator - INFO - Leaving consumer group (arima2).
-kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
-root - INFO - 1
-root - INFO - 1
-root - INFO -                                        prediction
-time_stamp                                       
-2019-04-24 17:13:23.315999985+00:00  6.434917e+05
-2019-04-24 17:13:33.315999985+00:00  6.488982e+05
-2019-04-24 17:13:43.315999985+00:00  6.544710e+05
-2019-04-24 17:13:53.315999985+00:00  6.598293e+05
-2019-04-24 17:14:03.315999985+00:00  6.653995e+05
-2019-04-24 17:14:13.315999985+00:00  6.707632e+05
-2019-04-24 17:14:23.315999985+00:00  6.760672e+05
-2019-04-24 17:14:33.315999985+00:00  6.815731e+05
-2019-04-24 17:14:43.315999985+00:00  6.865781e+05
-2019-04-24 17:14:53.315999985+00:00  6.917246e+05
-2019-04-24 17:15:03.315999985+00:00  6.974062e+05
-2019-04-24 17:15:13.315999985+00:00  7.031645e+05
-2019-04-24 17:15:23.315999985+00:00  7.090645e+05
-2019-04-24 17:15:33.315999985+00:00  7.151278e+05
-2019-04-24 17:15:43.315999985+00:00  7.213573e+05
-2019-04-24 17:15:53.315999985+00:00  7.273724e+05
-2019-04-24 17:16:03.315999985+00:00  7.335994e+05
-2019-04-24 17:16:13.315999985+00:00  7.396198e+05
-2019-04-24 17:16:23.316999912+00:00  7.455806e+05
-2019-04-24 17:16:33.315999985+00:00  7.517432e+05
-2019-04-24 17:16:43.315999985+00:00  7.574050e+05
-2019-04-24 17:16:53.316999912+00:00  7.632082e+05
-2019-04-24 17:17:03.319000006+00:00  7.695466e+05
-2019-04-24 17:17:13.315999985+00:00  7.759616e+05
-2019-04-24 17:17:23.315999985+00:00  7.825184e+05
-2019-04-24 17:17:33.315999985+00:00  7.892384e+05
-2019-04-24 17:17:43.316999912+00:00  7.961248e+05
-2019-04-24 17:17:53.315999985+00:00  8.027966e+05
-2019-04-24 17:18:03.315999985+00:00  8.096803e+05
-2019-04-24 17:18:13.315999985+00:00  8.163575e+05
-...                                           ...
-2019-04-24 17:30:03.315999985+00:00  1.431669e+06
-2019-04-24 17:30:13.315999985+00:00  1.442287e+06
-2019-04-24 17:30:23.315999985+00:00  1.452845e+06
-2019-04-24 17:30:33.315999985+00:00  1.463605e+06
-2019-04-24 17:30:43.315999985+00:00  1.473864e+06
-2019-04-24 17:30:53.315999985+00:00  1.484265e+06
-2019-04-24 17:31:03.315999985+00:00  1.495200e+06
-2019-04-24 17:31:13.315999985+00:00  1.506213e+06
-2019-04-24 17:31:23.315999985+00:00  1.517367e+06
-2019-04-24 17:31:33.315999985+00:00  1.528684e+06
-2019-04-24 17:31:43.315999985+00:00  1.540168e+06
-2019-04-24 17:31:53.315999985+00:00  1.551437e+06
-2019-04-24 17:32:03.315999985+00:00  1.562918e+06
-2019-04-24 17:32:13.315999985+00:00  1.574192e+06
-2019-04-24 17:32:23.315999985+00:00  1.585407e+06
-2019-04-24 17:32:33.315999985+00:00  1.596824e+06
-2019-04-24 17:32:43.315999985+00:00  1.607740e+06
-2019-04-24 17:32:53.315999985+00:00  1.618797e+06
-2019-04-24 17:33:03.315999985+00:00  1.630389e+06
-2019-04-24 17:33:13.315999985+00:00  1.642059e+06
-2019-04-24 17:33:23.315999985+00:00  1.653869e+06
-2019-04-24 17:33:33.315999985+00:00  1.665844e+06
-2019-04-24 17:33:43.315999985+00:00  1.677984e+06
-2019-04-24 17:33:53.315999985+00:00  1.689910e+06
-2019-04-24 17:34:03.315999985+00:00  1.702048e+06
-2019-04-24 17:34:13.315999985+00:00  1.713979e+06
-2019-04-24 17:34:23.315999985+00:00  1.725851e+06
-2019-04-24 17:34:33.318000078+00:00  1.737924e+06
-2019-04-24 17:34:43.315999985+00:00  1.749497e+06
-2019-04-24 17:34:53.315999985+00:00  1.761211e+06
-
-[130 rows x 1 columns]
-kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
-kafka.conn - INFO - Probing node bootstrap broker version
-kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
-kafka.conn - INFO - Broker version identifed as 1.0.0
-kafka.conn - INFO - Set configuration api_version=(1, 0, 0) to skip auto check_version requests on startup
-kafka.consumer.subscription_state - INFO - Updating subscribed topics to: ('collectd',)
-kafka.cluster - INFO - Group coordinator for rnn2 is BrokerMetadata(nodeId=0, host='vm17-159.vcl.ncsu.edu', port=9092, rack=None)
-kafka.coordinator - INFO - Discovered coordinator 0 for group rnn2
-kafka.coordinator - INFO - Starting new heartbeat thread
-kafka.coordinator.consumer - INFO - Revoking previously assigned partitions set() for group rnn2
-kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
-kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
-kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
-kafka.coordinator - INFO - (Re-)joining group rnn2
-kafka.coordinator - INFO - Elected group leader -- performing partition assignments using range
-kafka.coordinator - INFO - Successfully joined group rnn2 with generation 59
-kafka.consumer.subscription_state - INFO - Updated partition assignment: [TopicPartition(topic='collectd', partition=0)]
-kafka.coordinator.consumer - INFO - Setting newly assigned partitions {TopicPartition(topic='collectd', partition=0)} for group rnn2
-kafka.coordinator - INFO - Stopping heartbeat thread
-kafka.coordinator - INFO - Leaving consumer group (rnn2).
-kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
-kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
-kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
-kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
-kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
-kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
-kafka.producer.kafka - INFO - Closing the Kafka producer with 0 secs timeout.
-kafka.producer.kafka - INFO - Proceeding to force close the producer since pending requests could not be completed within timeout 0.
-kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
-kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
-kafka.conn - INFO - Probing node bootstrap broker version
-kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
-kafka.conn - INFO - Broker version identifed as 1.0.0
-kafka.conn - INFO - Set configuration api_version=(1, 0, 0) to skip auto check_version requests on startup
-kafka.consumer.subscription_state - INFO - Updating subscribed topics to: ('collectd',)
-kafka.cluster - INFO - Group coordinator for arima2 is BrokerMetadata(nodeId=0, host='vm17-159.vcl.ncsu.edu', port=9092, rack=None)
-kafka.coordinator - INFO - Discovered coordinator 0 for group arima2
-kafka.coordinator - INFO - Starting new heartbeat thread
-kafka.coordinator.consumer - INFO - Revoking previously assigned partitions set() for group arima2
-kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
-kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
-kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
-kafka.coordinator - INFO - (Re-)joining group arima2
-kafka.coordinator - INFO - Elected group leader -- performing partition assignments using range
-kafka.coordinator - INFO - Successfully joined group arima2 with generation 59
-kafka.consumer.subscription_state - INFO - Updated partition assignment: [TopicPartition(topic='collectd', partition=0)]
-kafka.coordinator.consumer - INFO - Setting newly assigned partitions {TopicPartition(topic='collectd', partition=0)} for group arima2
-kafka.coordinator - INFO - Stopping heartbeat thread
-kafka.coordinator - INFO - Leaving consumer group (arima2).
+kafka.coordinator - INFO - Leaving consumer group (arima5).
 kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
 root - INFO - 2
 root - INFO - 2
 root - INFO -                                         prediction
 time_stamp                                        
-2019-04-24 17:40:23.316999912+00:00  699466.168065
-2019-04-24 17:40:33.318000078+00:00  696331.087953
-2019-04-24 17:40:43.315999985+00:00  693077.239391
-2019-04-24 17:40:53.315999985+00:00  689560.555380
-2019-04-24 17:41:03.315999985+00:00  685954.644404
-2019-04-24 17:41:13.315999985+00:00  682212.704923
-2019-04-24 17:41:23.315999985+00:00  678355.367463
-2019-04-24 17:41:33.315999985+00:00  674321.642247
-2019-04-24 17:41:43.315999985+00:00  670233.342634
-2019-04-24 17:41:53.315999985+00:00  665888.938378
-2019-04-24 17:42:03.315999985+00:00  661469.630530
-2019-04-24 17:42:13.315999985+00:00  656915.024325
-2019-04-24 17:42:23.315999985+00:00  649271.047354
-2019-04-24 17:42:33.315999985+00:00  641310.768195
-kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
-kafka.conn - INFO - Probing node bootstrap broker version
-kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+2019-04-25 21:10:26.954999924+00:00  -13755.669772
+2019-04-25 21:10:54.539000034+00:00  -29007.569718
+2019-04-25 21:11:04.539999962+00:00  -44088.498293
+2019-04-25 21:11:14.539999962+00:00  -59346.220459
+2019-04-25 21:11:24.539999962+00:00  -74562.573676
+2019-04-25 21:11:34.539000034+00:00  -89785.556706
+2019-04-25 21:11:44.539999962+00:00 -105008.945123
+2019-04-25 21:11:54.569999933+00:00 -120231.793921
+2019-04-25 21:12:04.539000034+00:00 -135454.828913
+2019-04-25 21:12:14.539999962+00:00 -150677.827970
+2019-04-25 21:12:24.539000034+00:00 -165900.828960
+2019-04-25 21:12:34.539999962+00:00 -181123.831527
+tensorflow - WARNING - From /home/araul/.local/lib/python3.6/site-packages/tensorflow/python/framework/op_def_library.py:263: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Colocations handled automatically by placer.
+tensorflow - WARNING - From /home/araul/.local/lib/python3.6/site-packages/tensorflow/python/ops/math_ops.py:3066: to_int32 (from tensorflow.python.ops.math_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.cast instead.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.producer.kafka - INFO - Closing the Kafka producer with 0 secs timeout.
+kafka.producer.kafka - INFO - Proceeding to force close the producer since pending requests could not be completed within timeout 0.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - Probing node bootstrap-0 broker version
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
 kafka.conn - INFO - Broker version identifed as 1.0.0
 kafka.conn - INFO - Set configuration api_version=(1, 0, 0) to skip auto check_version requests on startup
 kafka.consumer.subscription_state - INFO - Updating subscribed topics to: ('collectd',)
-kafka.cluster - INFO - Group coordinator for rnn2 is BrokerMetadata(nodeId=0, host='vm17-159.vcl.ncsu.edu', port=9092, rack=None)
-kafka.coordinator - INFO - Discovered coordinator 0 for group rnn2
+kafka.cluster - INFO - Group coordinator for arima5 is BrokerMetadata(nodeId=0, host='vm17-159.vcl.ncsu.edu', port=9092, rack=None)
+kafka.coordinator - INFO - Discovered coordinator 0 for group arima5
 kafka.coordinator - INFO - Starting new heartbeat thread
-kafka.coordinator.consumer - INFO - Revoking previously assigned partitions set() for group rnn2
+kafka.coordinator.consumer - INFO - Revoking previously assigned partitions set() for group arima5
 kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
 kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
-kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
-kafka.coordinator - INFO - (Re-)joining group rnn2
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.coordinator - INFO - (Re-)joining group arima5
 kafka.coordinator - INFO - Elected group leader -- performing partition assignments using range
-kafka.coordinator - INFO - Successfully joined group rnn2 with generation 61
+kafka.coordinator - INFO - Successfully joined group arima5 with generation 138
 kafka.consumer.subscription_state - INFO - Updated partition assignment: [TopicPartition(topic='collectd', partition=0)]
-kafka.coordinator.consumer - INFO - Setting newly assigned partitions {TopicPartition(topic='collectd', partition=0)} for group rnn2
+kafka.coordinator.consumer - INFO - Setting newly assigned partitions {TopicPartition(topic='collectd', partition=0)} for group arima5
 kafka.coordinator - INFO - Stopping heartbeat thread
-kafka.coordinator - INFO - Leaving consumer group (rnn2).
+kafka.coordinator - INFO - Leaving consumer group (arima5).
 kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
-kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
-kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+root - INFO - 1
+root - INFO - 1
+root - INFO -                                       prediction
+time_stamp                                      
+2019-04-25 21:17:44.539999962+00:00  1494.834269
+2019-04-25 21:17:54.539999962+00:00  1493.147400
+2019-04-25 21:18:04.539999962+00:00  1492.734121
+2019-04-25 21:18:14.539000034+00:00  1492.492546
+2019-04-25 21:18:24.539000034+00:00  1492.017171
+2019-04-25 21:18:34.539000034+00:00  1491.495323
+2019-04-25 21:18:44.539000034+00:00  1491.043450
+2019-04-25 21:18:54.539999962+00:00  1490.620197
+2019-04-25 21:19:04.539999962+00:00  1490.184789
+2019-04-25 21:19:14.539000034+00:00  1489.740897
+2019-04-25 21:19:24.539999962+00:00  1489.299423
+2019-04-25 21:19:34.539000034+00:00  1488.860753
+2019-04-25 21:19:44.539000034+00:00  1488.421917
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
 kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
 kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
-kafka.conn - INFO - <BrokerConnection node_id=bootstrap host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.producer.kafka - INFO - Closing the Kafka producer with 0 secs timeout.
+kafka.producer.kafka - INFO - Proceeding to force close the producer since pending requests could not be completed within timeout 0.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - Probing node bootstrap-0 broker version
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - Broker version identifed as 1.0.0
+kafka.conn - INFO - Set configuration api_version=(1, 0, 0) to skip auto check_version requests on startup
+kafka.consumer.subscription_state - INFO - Updating subscribed topics to: ('collectd',)
+kafka.cluster - INFO - Group coordinator for arima5 is BrokerMetadata(nodeId=0, host='vm17-159.vcl.ncsu.edu', port=9092, rack=None)
+kafka.coordinator - INFO - Discovered coordinator 0 for group arima5
+kafka.coordinator - INFO - Starting new heartbeat thread
+kafka.coordinator.consumer - INFO - Revoking previously assigned partitions set() for group arima5
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.coordinator - INFO - (Re-)joining group arima5
+kafka.coordinator - INFO - Elected group leader -- performing partition assignments using range
+kafka.coordinator - INFO - Successfully joined group arima5 with generation 140
+kafka.consumer.subscription_state - INFO - Updated partition assignment: [TopicPartition(topic='collectd', partition=0)]
+kafka.coordinator.consumer - INFO - Setting newly assigned partitions {TopicPartition(topic='collectd', partition=0)} for group arima5
+kafka.coordinator - INFO - Stopping heartbeat thread
+kafka.coordinator - INFO - Leaving consumer group (arima5).
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+root - INFO - 0
+root - INFO - 0
+root - INFO -                                       prediction
+time_stamp                                      
+2019-04-25 21:24:54.539000034+00:00  1488.070981
+2019-04-25 21:25:04.539000034+00:00  1488.459175
+2019-04-25 21:25:14.539000034+00:00  1488.834929
+2019-04-25 21:25:24.539000034+00:00  1489.195811
+2019-04-25 21:25:34.539000034+00:00  1488.191543
+2019-04-25 21:25:44.539999962+00:00  1487.373557
+2019-04-25 21:25:54.539000034+00:00  1486.721066
+2019-04-25 21:26:04.539000034+00:00  1486.214504
+2019-04-25 21:26:14.539000034+00:00  1485.639174
+2019-04-25 21:26:24.539000034+00:00  1485.029423
+2019-04-25 21:26:34.539999962+00:00  1484.413046
+2019-04-25 21:26:44.539999962+00:00  1483.812062
+2019-04-25 21:26:54.539000034+00:00  1483.214820
+2019-04-25 21:27:04.539000034+00:00  1482.615895
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.producer.kafka - INFO - Closing the Kafka producer with 0 secs timeout.
+kafka.producer.kafka - INFO - Proceeding to force close the producer since pending requests could not be completed within timeout 0.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - Probing node bootstrap-0 broker version
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - Broker version identifed as 1.0.0
+kafka.conn - INFO - Set configuration api_version=(1, 0, 0) to skip auto check_version requests on startup
+kafka.consumer.subscription_state - INFO - Updating subscribed topics to: ('collectd',)
+kafka.cluster - INFO - Group coordinator for arima5 is BrokerMetadata(nodeId=0, host='vm17-159.vcl.ncsu.edu', port=9092, rack=None)
+kafka.coordinator - INFO - Discovered coordinator 0 for group arima5
+kafka.coordinator - INFO - Starting new heartbeat thread
+kafka.coordinator.consumer - INFO - Revoking previously assigned partitions set() for group arima5
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.coordinator - INFO - (Re-)joining group arima5
+kafka.coordinator - INFO - Elected group leader -- performing partition assignments using range
+kafka.coordinator - INFO - Successfully joined group arima5 with generation 142
+kafka.consumer.subscription_state - INFO - Updated partition assignment: [TopicPartition(topic='collectd', partition=0)]
+kafka.coordinator.consumer - INFO - Setting newly assigned partitions {TopicPartition(topic='collectd', partition=0)} for group arima5
+kafka.coordinator - INFO - Stopping heartbeat thread
+kafka.coordinator - INFO - Leaving consumer group (arima5).
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+root - INFO - 2
+root - INFO - 2
+root - INFO -                                       prediction
+time_stamp                                      
+2019-04-25 21:30:24.539999962+00:00  1438.093816
+2019-04-25 21:30:34.539000034+00:00  1380.905981
+2019-04-25 21:30:44.539999962+00:00  1330.005572
+2019-04-25 21:30:54.539999962+00:00  1276.266627
+2019-04-25 21:31:04.539000034+00:00  1222.568089
+2019-04-25 21:31:14.539999962+00:00  1169.290461
+2019-04-25 21:31:24.539999962+00:00  1115.852700
+2019-04-25 21:31:34.539999962+00:00  1062.408352
+2019-04-25 21:31:44.539999962+00:00  1008.991132
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.producer.kafka - INFO - Closing the Kafka producer with 0 secs timeout.
+kafka.producer.kafka - INFO - Proceeding to force close the producer since pending requests could not be completed within timeout 0.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - Probing node bootstrap-0 broker version
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - Broker version identifed as 1.0.0
+kafka.conn - INFO - Set configuration api_version=(1, 0, 0) to skip auto check_version requests on startup
+kafka.consumer.subscription_state - INFO - Updating subscribed topics to: ('collectd',)
+kafka.cluster - INFO - Group coordinator for arima5 is BrokerMetadata(nodeId=0, host='vm17-159.vcl.ncsu.edu', port=9092, rack=None)
+kafka.coordinator - INFO - Discovered coordinator 0 for group arima5
+kafka.coordinator - INFO - Starting new heartbeat thread
+kafka.coordinator.consumer - INFO - Revoking previously assigned partitions set() for group arima5
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.coordinator - INFO - (Re-)joining group arima5
+kafka.coordinator - INFO - Elected group leader -- performing partition assignments using range
+kafka.coordinator - INFO - Successfully joined group arima5 with generation 144
+kafka.consumer.subscription_state - INFO - Updated partition assignment: [TopicPartition(topic='collectd', partition=0)]
+kafka.coordinator.consumer - INFO - Setting newly assigned partitions {TopicPartition(topic='collectd', partition=0)} for group arima5
+kafka.coordinator - INFO - Stopping heartbeat thread
+kafka.coordinator - INFO - Leaving consumer group (arima5).
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.producer.kafka - INFO - Closing the Kafka producer with 0 secs timeout.
+kafka.producer.kafka - INFO - Proceeding to force close the producer since pending requests could not be completed within timeout 0.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - Probing node bootstrap-0 broker version
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - Broker version identifed as 1.0.0
+kafka.conn - INFO - Set configuration api_version=(1, 0, 0) to skip auto check_version requests on startup
+kafka.consumer.subscription_state - INFO - Updating subscribed topics to: ('collectd',)
+kafka.cluster - INFO - Group coordinator for arima5 is BrokerMetadata(nodeId=0, host='vm17-159.vcl.ncsu.edu', port=9092, rack=None)
+kafka.coordinator - INFO - Discovered coordinator 0 for group arima5
+kafka.coordinator - INFO - Starting new heartbeat thread
+kafka.coordinator.consumer - INFO - Revoking previously assigned partitions set() for group arima5
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.coordinator - INFO - (Re-)joining group arima5
+kafka.coordinator - INFO - Elected group leader -- performing partition assignments using range
+kafka.coordinator - INFO - Successfully joined group arima5 with generation 146
+kafka.consumer.subscription_state - INFO - Updated partition assignment: [TopicPartition(topic='collectd', partition=0)]
+kafka.coordinator.consumer - INFO - Setting newly assigned partitions {TopicPartition(topic='collectd', partition=0)} for group arima5
+kafka.coordinator - INFO - Stopping heartbeat thread
+kafka.coordinator - INFO - Leaving consumer group (arima5).
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.producer.kafka - INFO - Closing the Kafka producer with 0 secs timeout.
+kafka.producer.kafka - INFO - Proceeding to force close the producer since pending requests could not be completed within timeout 0.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - Probing node bootstrap-0 broker version
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - Broker version identifed as 1.0.0
+kafka.conn - INFO - Set configuration api_version=(1, 0, 0) to skip auto check_version requests on startup
+kafka.consumer.subscription_state - INFO - Updating subscribed topics to: ('collectd',)
+kafka.cluster - INFO - Group coordinator for arima5 is BrokerMetadata(nodeId=0, host='vm17-159.vcl.ncsu.edu', port=9092, rack=None)
+kafka.coordinator - INFO - Discovered coordinator 0 for group arima5
+kafka.coordinator - INFO - Starting new heartbeat thread
+kafka.coordinator.consumer - INFO - Revoking previously assigned partitions set() for group arima5
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.coordinator - INFO - (Re-)joining group arima5
+kafka.coordinator - INFO - Elected group leader -- performing partition assignments using range
+kafka.coordinator - INFO - Successfully joined group arima5 with generation 148
+kafka.consumer.subscription_state - INFO - Updated partition assignment: [TopicPartition(topic='collectd', partition=0)]
+kafka.coordinator.consumer - INFO - Setting newly assigned partitions {TopicPartition(topic='collectd', partition=0)} for group arima5
+kafka.coordinator - INFO - Stopping heartbeat thread
+kafka.coordinator - INFO - Leaving consumer group (arima5).
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+root - INFO - 2
+root - INFO - 2
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.producer.kafka - INFO - Closing the Kafka producer with 0 secs timeout.
+kafka.producer.kafka - INFO - Proceeding to force close the producer since pending requests could not be completed within timeout 0.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - Probing node bootstrap-0 broker version
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - Broker version identifed as 1.0.0
+kafka.conn - INFO - Set configuration api_version=(1, 0, 0) to skip auto check_version requests on startup
+kafka.consumer.subscription_state - INFO - Updating subscribed topics to: ('collectd',)
+kafka.cluster - INFO - Group coordinator for arima5 is BrokerMetadata(nodeId=0, host='vm17-159.vcl.ncsu.edu', port=9092, rack=None)
+kafka.coordinator - INFO - Discovered coordinator 0 for group arima5
+kafka.coordinator - INFO - Starting new heartbeat thread
+kafka.coordinator.consumer - INFO - Revoking previously assigned partitions set() for group arima5
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.coordinator - INFO - (Re-)joining group arima5
+kafka.coordinator - INFO - Elected group leader -- performing partition assignments using range
+kafka.coordinator - INFO - Successfully joined group arima5 with generation 150
+kafka.consumer.subscription_state - INFO - Updated partition assignment: [TopicPartition(topic='collectd', partition=0)]
+kafka.coordinator.consumer - INFO - Setting newly assigned partitions {TopicPartition(topic='collectd', partition=0)} for group arima5
+kafka.coordinator - INFO - Stopping heartbeat thread
+kafka.coordinator - INFO - Leaving consumer group (arima5).
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.producer.kafka - INFO - Closing the Kafka producer with 0 secs timeout.
+kafka.producer.kafka - INFO - Proceeding to force close the producer since pending requests could not be completed within timeout 0.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - Probing node bootstrap-0 broker version
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - Broker version identifed as 1.0.0
+kafka.conn - INFO - Set configuration api_version=(1, 0, 0) to skip auto check_version requests on startup
+kafka.consumer.subscription_state - INFO - Updating subscribed topics to: ('collectd',)
+kafka.cluster - INFO - Group coordinator for arima5 is BrokerMetadata(nodeId=0, host='vm17-159.vcl.ncsu.edu', port=9092, rack=None)
+kafka.coordinator - INFO - Discovered coordinator 0 for group arima5
+kafka.coordinator - INFO - Starting new heartbeat thread
+kafka.coordinator.consumer - INFO - Revoking previously assigned partitions set() for group arima5
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.coordinator - INFO - (Re-)joining group arima5
+kafka.coordinator - INFO - Elected group leader -- performing partition assignments using range
+kafka.coordinator - INFO - Successfully joined group arima5 with generation 152
+kafka.consumer.subscription_state - INFO - Updated partition assignment: [TopicPartition(topic='collectd', partition=0)]
+kafka.coordinator.consumer - INFO - Setting newly assigned partitions {TopicPartition(topic='collectd', partition=0)} for group arima5
+kafka.coordinator - INFO - Stopping heartbeat thread
+kafka.coordinator - INFO - Leaving consumer group (arima5).
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.producer.kafka - INFO - Closing the Kafka producer with 0 secs timeout.
+kafka.producer.kafka - INFO - Proceeding to force close the producer since pending requests could not be completed within timeout 0.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - Probing node bootstrap-0 broker version
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - Broker version identifed as 1.0.0
+kafka.conn - INFO - Set configuration api_version=(1, 0, 0) to skip auto check_version requests on startup
+kafka.consumer.subscription_state - INFO - Updating subscribed topics to: ('collectd',)
+kafka.cluster - INFO - Group coordinator for arima5 is BrokerMetadata(nodeId=0, host='vm17-159.vcl.ncsu.edu', port=9092, rack=None)
+kafka.coordinator - INFO - Discovered coordinator 0 for group arima5
+kafka.coordinator - INFO - Starting new heartbeat thread
+kafka.coordinator.consumer - INFO - Revoking previously assigned partitions set() for group arima5
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.coordinator - INFO - (Re-)joining group arima5
+kafka.coordinator - INFO - Elected group leader -- performing partition assignments using range
+kafka.coordinator - INFO - Successfully joined group arima5 with generation 154
+kafka.consumer.subscription_state - INFO - Updated partition assignment: [TopicPartition(topic='collectd', partition=0)]
+kafka.coordinator.consumer - INFO - Setting newly assigned partitions {TopicPartition(topic='collectd', partition=0)} for group arima5
+kafka.coordinator - INFO - Stopping heartbeat thread
+kafka.coordinator - INFO - Leaving consumer group (arima5).
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.producer.kafka - INFO - Closing the Kafka producer with 0 secs timeout.
+kafka.producer.kafka - INFO - Proceeding to force close the producer since pending requests could not be completed within timeout 0.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - Probing node bootstrap-0 broker version
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - Broker version identifed as 1.0.0
+kafka.conn - INFO - Set configuration api_version=(1, 0, 0) to skip auto check_version requests on startup
+kafka.consumer.subscription_state - INFO - Updating subscribed topics to: ('collectd',)
+kafka.cluster - INFO - Group coordinator for arima5 is BrokerMetadata(nodeId=0, host='vm17-159.vcl.ncsu.edu', port=9092, rack=None)
+kafka.coordinator - INFO - Discovered coordinator 0 for group arima5
+kafka.coordinator - INFO - Starting new heartbeat thread
+kafka.coordinator.consumer - INFO - Revoking previously assigned partitions set() for group arima5
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.coordinator - INFO - (Re-)joining group arima5
+kafka.coordinator - INFO - Elected group leader -- performing partition assignments using range
+kafka.coordinator - INFO - Successfully joined group arima5 with generation 156
+kafka.consumer.subscription_state - INFO - Updated partition assignment: [TopicPartition(topic='collectd', partition=0)]
+kafka.coordinator.consumer - INFO - Setting newly assigned partitions {TopicPartition(topic='collectd', partition=0)} for group arima5
+kafka.coordinator - INFO - Stopping heartbeat thread
+kafka.coordinator - INFO - Leaving consumer group (arima5).
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.producer.kafka - INFO - Closing the Kafka producer with 0 secs timeout.
+kafka.producer.kafka - INFO - Proceeding to force close the producer since pending requests could not be completed within timeout 0.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - Probing node bootstrap-0 broker version
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - Broker version identifed as 1.0.0
+kafka.conn - INFO - Set configuration api_version=(1, 0, 0) to skip auto check_version requests on startup
+kafka.consumer.subscription_state - INFO - Updating subscribed topics to: ('collectd',)
+kafka.cluster - INFO - Group coordinator for arima5 is BrokerMetadata(nodeId=0, host='vm17-159.vcl.ncsu.edu', port=9092, rack=None)
+kafka.coordinator - INFO - Discovered coordinator 0 for group arima5
+kafka.coordinator - INFO - Starting new heartbeat thread
+kafka.coordinator.consumer - INFO - Revoking previously assigned partitions set() for group arima5
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.coordinator - INFO - (Re-)joining group arima5
+kafka.coordinator - INFO - Elected group leader -- performing partition assignments using range
+kafka.coordinator - INFO - Successfully joined group arima5 with generation 158
+kafka.consumer.subscription_state - INFO - Updated partition assignment: [TopicPartition(topic='collectd', partition=0)]
+kafka.coordinator.consumer - INFO - Setting newly assigned partitions {TopicPartition(topic='collectd', partition=0)} for group arima5
+kafka.coordinator - INFO - Stopping heartbeat thread
+kafka.coordinator - INFO - Leaving consumer group (arima5).
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.producer.kafka - INFO - Closing the Kafka producer with 0 secs timeout.
+kafka.producer.kafka - INFO - Proceeding to force close the producer since pending requests could not be completed within timeout 0.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - Probing node bootstrap-0 broker version
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - Broker version identifed as 1.0.0
+kafka.conn - INFO - Set configuration api_version=(1, 0, 0) to skip auto check_version requests on startup
+kafka.consumer.subscription_state - INFO - Updating subscribed topics to: ('collectd',)
+kafka.cluster - INFO - Group coordinator for arima5 is BrokerMetadata(nodeId=0, host='vm17-159.vcl.ncsu.edu', port=9092, rack=None)
+kafka.coordinator - INFO - Discovered coordinator 0 for group arima5
+kafka.coordinator - INFO - Starting new heartbeat thread
+kafka.coordinator.consumer - INFO - Revoking previously assigned partitions set() for group arima5
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.coordinator - INFO - (Re-)joining group arima5
+kafka.coordinator - INFO - Elected group leader -- performing partition assignments using range
+kafka.coordinator - INFO - Successfully joined group arima5 with generation 160
+kafka.consumer.subscription_state - INFO - Updated partition assignment: [TopicPartition(topic='collectd', partition=0)]
+kafka.coordinator.consumer - INFO - Setting newly assigned partitions {TopicPartition(topic='collectd', partition=0)} for group arima5
+kafka.coordinator - INFO - Stopping heartbeat thread
+kafka.coordinator - INFO - Leaving consumer group (arima5).
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to 152.46.17.159:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: connecting to vm17-159.vcl.ncsu.edu:9092 [('152.46.17.159', 9092) IPv4]
+kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connecting> [IPv4 ('152.46.17.159', 9092)]>: Connection complete.
+kafka.conn - INFO - <BrokerConnection node_id=bootstrap-0 host=152.46.17.159:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 
 kafka.producer.kafka - INFO - Closing the Kafka producer with 0 secs timeout.
 kafka.producer.kafka - INFO - Proceeding to force close the producer since pending requests could not be completed within timeout 0.
 kafka.conn - INFO - <BrokerConnection node_id=0 host=vm17-159.vcl.ncsu.edu:9092 <connected> [IPv4 ('152.46.17.159', 9092)]>: Closing connection. 

@@ -15,3 +15,4 @@ def producer(result):
         # Decide what to do if produce request failed...
         log.exception()
         pass
+    return
