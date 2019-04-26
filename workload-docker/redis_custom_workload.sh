@@ -54,22 +54,23 @@ LOG_FILE="${LOG_FILE:-/tmp/redis_custom_workload.log}"
 
 echo "Starting ycsb load..." # >> "$LOG_FILE"
 
-# gen_load_workload "$YCSB_RECORD_COUNT" >/tmp/workload
+gen_load_workload "$YCSB_RECORD_COUNT" >/tmp/workload
 
-# "$YCSB_DIR/bin/ycsb" load redis -s \
-#   -threads "$YCSB_THREAD_COUNT" \
-#   -P "/tmp/workload" \
-#   -p "redis.host=${REDIS_HOST}" \
-#   -p "redis.cluster=true" # >> "$LOG_FILE" 2>&1
+"$YCSB_DIR/bin/ycsb" load redis -s \
+  -threads "$YCSB_THREAD_COUNT" \
+  -P "/tmp/workload" \
+  -p "redis.host=${REDIS_HOST}" \
+  -p "redis.cluster=true" # >> "$LOG_FILE" 2>&1
 
 TOTAL="$(wc -l "$WORKLOAD_CURVE_FILE" | awk '{print $1}')"
 CURR=1
 
 # Run workload
 while read -r opCount; do
-  echo "Running workload ${CURR} / ${TOTAL} with operation count $((opCount * 1000))..."
+  opCount="$((opCount * 1000))"
+  echo "Running workload ${CURR} / ${TOTAL} with operation count $opCount..."
 
-  gen_read_workload "$((opCount * 1000))" >/tmp/workload
+  gen_read_workload "$opCount" >/tmp/workload
 
   "$YCSB_DIR/bin/ycsb" run redis -s \
     -threads "$YCSB_THREAD_COUNT" \
