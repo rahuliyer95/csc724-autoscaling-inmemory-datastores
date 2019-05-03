@@ -87,9 +87,8 @@ def predict_arima(df):
         pickle_in = open("arima.pickle","rb")
         arima_data = pickle.load(pickle_in)
         arima_data.append(df)
-        # df=arima_data
+        df=arima_data
     except Exception as e:
-        print(e)
         arima_data_out = open("arima.pickle","wb")    
         pickle.dump([], arima_data_out)
     arima_data_out = open("arima.pickle","wb")
@@ -130,7 +129,7 @@ def predict_arima(df):
     '''
         Find p,q dynamically
     '''
-
+    
     p=3
     q=1
     d=1    
@@ -183,57 +182,7 @@ def predict_arima(df):
 
 
 def arima_model(df,memory_host):
-    
-    '''
-    consumer = KafkaConsumer(
-    "collectd",
-    group_id='arima2',
-    auto_offset_reset="earliest",
-    enable_auto_commit=True,
-    bootstrap_servers=["152.46.17.159:9092"],
-    consumer_timeout_ms=10000,
-    )
-    memory_redis = []
-    time_stamp = []
-    memory_host = defaultdict(list)
-    timestamp_host = defaultdict(list)
-
-    for msg in consumer:
-        value = msg.value
-        result = json.loads(value.decode("utf8"))
-        if result[0]["type"] == "memory" and result[0]["plugin"] == "redis": # and  result[0]["type_instance"] == "used":
-            if result[0]["values"][0]:
-                if not math.isnan(float(result[0]["values"][0])):
-                 
-                    #print(result[0]["values"][0])
-                    try:
-                        memory_host[result[0]["host"]].append(result[0]["values"][0])
-                        timestamp_host[result[0]["host"]].append(result[0]["time"])
-                    except Exception as e:
-                        #logging.error(e)
-                        continue
-
-    max_length=0
-    max_length_host=0
-    for hosts in memory_host.keys():
-        #print(memory_host[hosts])
-        if(len(memory_host[hosts])>max_length):
-            max_length=len(memory_host[hosts])
-            max_length_host=hosts
-            
-    for values in itertools.zip_longest(*memory_host.values(),fillvalue=0):
-        memory_redis.append(sum(values)/1024)
-    for values in timestamp_host[max_length_host]:
-        time_stamp.append(values)
-    consumer.close()
-    print(memory_redis)
-    df = pd.DataFrame()
-    df["time_stamp"] = time_stamp
-    df["time_stamp"] = pd.to_datetime(df["time_stamp"], unit='s', utc=True)
-    df["memory_used"] = memory_redis
-    x = pd.Series(df["memory_used"])
-    '''
-    
+        
     forecast = predict_arima(df)
     if forecast is None:
         return json.dumps({
