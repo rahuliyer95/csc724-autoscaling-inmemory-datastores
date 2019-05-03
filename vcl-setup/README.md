@@ -54,5 +54,5 @@ Create them using the following commands
 
 ```sh
 /opt/kafka/bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic collectd --partitions 1 --replication-factor 1
-/opt/kafka/bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic prediction --partitions 1 ---replication-factor 1
+/opt/kafka/bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic prediction --partitions 1 --replication-factor 1
 ```
