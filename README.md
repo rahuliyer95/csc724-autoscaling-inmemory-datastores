@@ -32,6 +32,8 @@ Folder structure (Details only about important files):
     ├── multivariate_rnn-offline.py         # Offline phase of RNN which trains the model
     ├── multivariate_rnn.py	                # Considers latency,memory and CPU for prediction
     ├── online_rnn.py                       # Python file that runs during the online-phase(integrated with system)
+    ├── with_window.py                      # RNN with one node varying window size(Failed method 01)
+    ├── multivariate_single_node.py         # RNN with one node(Failed method 01)
     └── README.md                           # Code described in detail for RNN
 
 #### Inside [ARIMA](https://github.com/rahuliyer95/csc724-autoscaling-inmemory-datastores/tree/master/prediction/arima) folder
