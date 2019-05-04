@@ -38,8 +38,7 @@ Folder structure (Details only about important files):
 
 #### Inside [ARIMA](https://github.com/rahuliyer95/csc724-autoscaling-inmemory-datastores/tree/master/prediction/arima) folder
      .
-    ├── auto_arima.py                       # 
-    ├── arima.py	                          # 
-    ├── stat.py                             # 
+    ├── auto_arima.py                       # AutoARIMA which sets value of p,q,d by choosing lowest AIC values
+    ├── arima.py	                        # ARIMA Function which chooses values of p,q from ACF & PACF,d from ch-test
     └── README.md                           # Code described in detail for ARIMA
 
