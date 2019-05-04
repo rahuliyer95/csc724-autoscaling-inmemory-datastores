@@ -27,6 +27,8 @@ To allow services through firewall iptables setup needs to be done. Use the foll
 ```sh
 iptables -I INPUT -p TCP -s 0.0.0.0/0 --dport 8000 -j ACCEPT # python simple http
 ```
+Run python http server
+```sh
 # cd outputs
 # python -m http.server -b 0.0.0.0
 ```
