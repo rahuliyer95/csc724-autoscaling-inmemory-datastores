@@ -5,7 +5,7 @@
 Description=Prediction Engine
 
 [Service]
-ExecStart=/usr/bin/python3 /opt/kafka/prediction/predictionEngine.py 
+ExecStart=/usr/bin/python3 /opt/prediction/predictionEngine.py 
 Restart=on-failure
 RestartSec=5
 
