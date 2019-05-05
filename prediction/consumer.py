@@ -24,9 +24,11 @@ def consume():
     for msg in consumer:
         value = msg.value
         result = json.loads(value.decode("utf8"))
+
+        ### Blacklist azure detached container. Have no control of the "deleted" container running in background
         if result[0]["host"]=="wk-caas-c36faa13376b4e7ab95a974547fdcada-b9c25b2662a83ce5e43afd":
             continue
-        if result[0]["type"] == "memory" and result[0]["plugin"] == "redis":# and  result[0]["type_instance"] == "used":
+        if result[0]["type"] == "memory" and result[0]["plugin"] == "redis":
             if result[0]["values"][0]:
                 if not math.isnan(float(result[0]["values"][0])):
                     try:

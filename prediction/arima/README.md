@@ -5,7 +5,10 @@
 4. Select AR and MA terms: Use the ACF and PACF todecide whether to include an AR term(s), MA term(s),or both.
 5. Build the model: Build the model and set the numberof periods to forecast to N= no of future datapoints
 
+
 #### Using ARIMA function
+
+Choose ARIMA when manually choosing to select values of p,d,q
 ```python
 stepwise_model = ARIMA(
         order=(p,d,q),
@@ -17,6 +20,9 @@ stepwise_model = ARIMA(
 
 
 #### Using autoarima function
+
+Choose AutoARIMA model to automatically select values of p,d,q from a range of values and selecting the set of values with low AIC value
+
 ```python
 stepwise_model = auto_arima(train, start_p=0, start_q=0,
                      max_p=4, max_q=4, m=12,

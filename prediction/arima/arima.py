@@ -26,6 +26,9 @@ import pickle
 
 logging.basicConfig(filename='app.log', level=logging.INFO, filemode='w', format='%(name)s - %(levelname)s - %(message)s')
 
+def getThreshold:
+    return 0.5 # set threshold for ACF
+
 def analyze(predict,memory_host):
     logging.info(predict)
     peak_value=max(predict["prediction"])
@@ -98,7 +101,7 @@ def predict_arima(df):
     '''
     tests 
     '''
-    nd=0
+    nd=1
     nsd=1
     try:
         adf_test=ADFTest(alpha=0.05)
@@ -129,10 +132,14 @@ def predict_arima(df):
     '''
         Find p,q dynamically
     '''
-    
-    p=3
-    q=1
-    d=1    
+    acf_lags=acf(df["memory_used"])
+    acf_lags_threshold=[x for x in lags if x>=getThreshold()]
+    p=len(acf_lags_threshold) if len(acf_lags_threshold)<=4 else 4
+
+    pacf_lags=pacf(df["memory_used"])
+    pacf_lags_threshold=[x for x in lags if x>=getThreshold()]
+    q=len(pacf_lags_threshold) if len(pacf_lags_threshold)<=2 else 2
+    d=nd
 
     train, test = train_test_split(df,shuffle=False, test_size=0.3)
 

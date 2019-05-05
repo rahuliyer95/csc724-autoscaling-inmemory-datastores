@@ -1,0 +1,13 @@
+# Prediction
+# @author: Akshay Raul <araul@ncsu.edu>
+
+[Unit]
+Description=Prediction Engine
+
+[Service]
+ExecStart=/usr/bin/python3 /opt/kafka/prediction/predictionEngine.py 
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
