@@ -22,22 +22,42 @@ def predict(df,memory_host):
 
     arima_data=json.loads(arima_result)
     arima_status=arima_data['scale']
-    # arima_status='no'
-    if(arima_status==rnn_status):
+    
+    if arima_status=="no" and rnn_status=="up":
+        autoScaleData ={
+            'peak_value': rnn_data['peak_value'],
+            'average_value': rnn_data['average_value'],
+            'nodes': rnn_data['nodes'],
+            'scale': rnn_data['scale']
+            }
+    elif arima_status=="up" and rnn_status=="no":
+        autoScaleData ={
+            'peak_value': rnn_data['peak_value'],
+            'average_value': rnn_data['average_value'],
+            'nodes': rnn_data['nodes'],
+            'scale': rnn_data['scale']
+            }
+    elif arima_status=="no" and rnn_status=="down":
         autoScaleData = {
             'peak_value': arima_data['peak_value'],
             'average_value': arima_data['average_value'],
             'nodes': arima_data['nodes'],
             'scale': arima_data['scale']
-        }
-
+            }
+    elif arima_status=="down" and rnn_status=="no":
+        autoScaleData ={
+            'peak_value': rnn_data['peak_value'],
+            'average_value': rnn_data['average_value'],
+            'nodes': rnn_data['nodes'],
+            'scale': rnn_data['scale']
+            }
     else:
         autoScaleData ={
             'peak_value': rnn_data['peak_value'],
             'average_value': rnn_data['average_value'],
             'nodes': rnn_data['nodes'],
             'scale': rnn_data['scale']
-        }
+            }
 
     print("********************************************")
     print("The autoscale message sent to Scaling engine:")

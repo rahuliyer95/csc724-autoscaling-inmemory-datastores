@@ -6,14 +6,16 @@ from collections import defaultdict
 import json
 import logging
 import itertools
+from plotly.offline import download_plotlyjs, init_notebook_mode, iplot_mpl, iplot, plot
+import plotly.graph_objs as go
 
 def consume():
     consumer = KafkaConsumer(
     "collectd",
-    group_id='arima5',
+    group_id='prediction5',
     auto_offset_reset="earliest",
     enable_auto_commit=True,
-    bootstrap_servers=["152.46.17.159:9092"],
+    bootstrap_servers=["152.46.19.8:9092"],
     consumer_timeout_ms=5000,
     )
     memory_redis = []
@@ -51,8 +53,6 @@ def consume():
     for values in timestamp_host[max_length_host]:
         time_stamp.append(values)
 
-    # memory_redis=memory_redis[max(1000,len(memory_redis)-1000):]
-    # time_stamp=time_stamp[max(0,len(time_stamp)-1000):]
 
     df = pd.DataFrame()
     df["time_stamp"] = time_stamp
@@ -62,5 +62,13 @@ def consume():
 
 
     df.set_index("time_stamp",inplace=True)
-    
+    trace = go.Scatter(
+        x=df.index, 
+        y=df["memory_used"],
+        mode = 'lines+markers'
+    )
+    data = [trace]
+    plot(data, filename="memory-used-overtime")
+
     return df, memory_host
+consume()

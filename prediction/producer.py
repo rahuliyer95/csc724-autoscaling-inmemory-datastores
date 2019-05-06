@@ -6,7 +6,7 @@ from kafka.errors import KafkaError
 
 
 def producer(result):
-    kafka_producer = KafkaProducer(bootstrap_servers='152.46.17.159:9092',value_serializer=lambda v: json.dumps(v).encode('utf-8'),api_version=(0,10,1))
+    kafka_producer = KafkaProducer(bootstrap_servers='152.46.19.8:9092',value_serializer=lambda v: json.dumps(v).encode('utf-8'),api_version=(0,10,1))
     future = kafka_producer.send('prediction',result)
     kafka_producer.flush()
     try:

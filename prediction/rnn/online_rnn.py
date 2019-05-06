@@ -18,7 +18,11 @@ import itertools
 
 from keras import Sequential
 from keras.layers import Dense, LSTM
+
+import time
+current_milli_time = lambda: int(round(time.time() * 1000))
 status='None'
+
 def rnn(df,memory_host):
 
     time=[]
@@ -31,39 +35,6 @@ def rnn(df,memory_host):
  
     timestamp_host=defaultdict(list)
     time_stamp=[]
-
-    '''
-    memory_redis = []
-    memory_redis = []
-    for msg in consumer:
-        value = msg.value
-        result = json.loads(value.decode("utf8"))
-        if result[0]["type"] == "memory" and result[0]["plugin"] == "redis": # and result[0]["type_instance"] == "used":
-            if result[0]["values"][0]:
-                if not math.isnan(float(result[0]["values"][0])):
-
-                    print(value)
-                    try:
-                        memory_host[result[0]["host"]].append(result[0]["values"][0] /( 1024 * 1024))
-                        timestamp_host[result[0]["host"]].append(result[0]["time"])
-                    except Exception as e:
-                        logging.error(e)
-                        continue
-    max_length=0
-    max_length_host=0
-    for hosts in memory_host.keys():
-        print(memory_host[hosts])
-        if(len(memory_host[hosts])>max_length):
-            max_length=len(memory_host[hosts])
-            max_length_host=hosts
-
-    for values in itertools.zip_longest(*memory_host.values(), fillvalue=0):
-        memory_redis.append(sum(values) / 1024)
-    for values in timestamp_host[max_length_host]:
-        time_stamp.append(values)
-
-    consumer.close()
-    '''
     memory_redis=df["memory_used"]
     #time_stamp=df.index
     memory_redis = memory_redis[max(0, len(memory_redis) - 100):]
@@ -75,6 +46,7 @@ def rnn(df,memory_host):
 
     avg_value=0
     predicted=[]
+    time_in=current_milli_time()
     try:
         average=0
         redis_data = pd.read_csv("collectd-data-multivariate.csv")
@@ -133,7 +105,10 @@ def rnn(df,memory_host):
 
 
         rms = sqrt(mean_squared_error(Y_test,predicted))
+        time_out=current_milli_time()
+        print("TIME for RNN(ms):"+str(time_out-time_in))
         print("ROOT MEAN SQUARE ERROR"+str(rms))
+        plt1.close('all')
         plt1.plot(predicted_value, color= 'red',label='predicted')
 
         plt1.plot(input_data[lookback:test_size+(2*lookback),1], color='green',label='actual')
@@ -143,8 +118,11 @@ def rnn(df,memory_host):
         plt1.legend(bbox_to_anchor=(2.05, 1), loc=2, borderaxespad=0.)
         plt1.savefig('Predictio_rnn.png')
         print(autoScale)
+
         return autoScale,rms*100
     except Exception as e:
+        time_out=current_milli_time()
+        print("TIME for RNN(ms):"+str(time_out-time_in))
         exc_info = sys.exc_info()
         autoScale = json.dumps({
             'average_value':0,

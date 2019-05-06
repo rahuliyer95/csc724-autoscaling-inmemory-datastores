@@ -22,12 +22,13 @@ import json
 import logging
 import itertools
 import pickle
-#from prediction import consumer
+import time
 
-logging.basicConfig(filename='app.log', level=logging.INFO, filemode='w', format='%(name)s - %(levelname)s - %(message)s')
+current_milli_time = lambda: int(round(time.time() * 1000))
+# logging.basicConfig(filename='app.log', level=logging.INFO, filemode='w', format='%(name)s - %(levelname)s - %(message)s')
 
-def getThreshold:
-    return 0.5 # set threshold for ACF
+def getThreshold():
+    return 0.7 # set threshold for ACF
 
 def analyze(predict,memory_host):
     logging.info(predict)
@@ -54,31 +55,39 @@ def analyze(predict,memory_host):
 
 
 def predict_arima(df):
-    trace = go.Scatter(
-        x=df.index, 
-        y=df["memory_used"],
-        mode = 'lines+markers'
-    )
-    data = [trace]
+
+    time_in=current_milli_time()
     try:
         forecast_in = open("forecast.pickle","rb")
         future_forecast = pickle.load(forecast_in)
         forecast_in.append(df)
-        error=0
+        error=[]
+        """
+        Calculate errors
+        """
         if len(df) < len(future_forecast):
-            error=mean_absolute_error(df, abs(future_forecast[:len(df)]))
+            error=df["memory_used"] - future_forecast[:len(df)]["memory_used"]
         elif len(df) > len(future_forecast):
-            error=mean_absolute_error(df[0:len(future_forecast)], abs(future_forecast))
+            error=df[0:len(future_forecast)]["memory_used"]- future_forecast["memory_used"]
         else:
-            error=mean_absolute_error(df, abs(future_forecast))
+            error=df["memory_used"]-future_forecast["memory_used"]
+        overestimation=[x for x in error if x<0]
+        overestimation=sum(overestimation)/len(overestimation)
+        underestimation=[x for x in error if x>=0]
+        underestimation=sum(underestimation)/len(underestimation)
+        print("UNDERESTIMATION ERROR: "+underestimation)
+        print("OVERESTIMATION ERROR: "+overestimation)
         print("Mean Absolute Error in Last iteration "+str(error))
+        """
+        Overestimation & Underestimation errors
+        """
+
+
+
     except Exception as e:
         print("RMSE To be computed")
         # Do Nothing
   
-    
-
-    plot(data, filename="memory-used-overtime")
     try:
         pm.plot_pacf(df,show=False).savefig('pacf.png')
         pm.plot_acf(df,show=False).savefig('acf.png')
@@ -90,7 +99,7 @@ def predict_arima(df):
         pickle_in = open("arima.pickle","rb")
         arima_data = pickle.load(pickle_in)
         arima_data.append(df)
-        df=arima_data
+        #df=arima_data
     except Exception as e:
         arima_data_out = open("arima.pickle","wb")    
         pickle.dump([], arima_data_out)
@@ -128,21 +137,21 @@ def predict_arima(df):
         ARIMA MODEL
     '''
 
-    
     '''
         Find p,q dynamically
     '''
     acf_lags=acf(df["memory_used"])
-    acf_lags_threshold=[x for x in lags if x>=getThreshold()]
+    acf_lags_threshold=[x for x in acf_lags if x>=getThreshold()]
     p=len(acf_lags_threshold) if len(acf_lags_threshold)<=4 else 4
 
     pacf_lags=pacf(df["memory_used"])
-    pacf_lags_threshold=[x for x in lags if x>=getThreshold()]
-    q=len(pacf_lags_threshold) if len(pacf_lags_threshold)<=2 else 2
+    pacf_lags_threshold=[x for x in pacf_lags if x>=getThreshold()]
+    q=len(pacf_lags_threshold) if len(pacf_lags_threshold)<=1 else 1
     d=nd
 
     train, test = train_test_split(df,shuffle=False, test_size=0.3)
 
+    # If data is seasonal set the values of P,D,Q in seasonal order
     stepwise_model = ARIMA(
         order=(p,d,q),
         seasonal_order=(0,nsd,0,12),
@@ -155,6 +164,12 @@ def predict_arima(df):
     try:
 
         stepwise_model.fit(df)
+        """ 
+          Vary the periods as per the forecasting window 
+          n_periods= 30 = 5mins
+          n_periods= 60 = 10mins
+          n_periods= 90 = 15mins
+        """
         future_forecast = stepwise_model.predict(n_periods=len(test))
         future_forecast = pd.DataFrame(future_forecast,index=test.index,columns=["prediction"])
 
@@ -179,9 +194,12 @@ def predict_arima(df):
         print(df)
         print("Predicted Data Points")
         print(future_forecast)
-       
+        time_out=current_milli_time()
+        print("TIME for RNN(ms):"+str(time_out-time_in))
         return future_forecast
     except Exception as e:
+        time_out=current_milli_time()
+        print("TIME for RNN(ms):"+str(time_out-time_in))
         print(e)
         return None
 
