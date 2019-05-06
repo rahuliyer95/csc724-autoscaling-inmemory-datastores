@@ -33,3 +33,23 @@ Run python http server
 # python -m http.server -b 0.0.0.0
 ```
 The outputs can be viewed at http://IP_Address:8000
+
+#### Prediction & Scaling Policy
+Prediction policy:
+```python
+if (average)>0.70*(len(memory_host.keys())*1024):
+    status='up'
+elif (average)<0.30*(len(memory_host.keys()))*1024:
+    status='down'
+else:
+    status='no'
+```
+
+Scaling Policy:
+
+| ARIMA   |      RNN      |  AutoScale |
+|----------|:-------------:|------:|
+| UP       |  NO           | UP    |
+| NO       |          UP   |    UP |
+| DOWN     | NO            | NO    |
+|NO        |DOWN           |  NO   |
